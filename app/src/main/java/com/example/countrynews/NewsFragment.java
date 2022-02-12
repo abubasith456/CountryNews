@@ -4,12 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -21,21 +18,12 @@ import com.example.countrynews.adapter.CustomAdapter;
 import com.example.countrynews.adapter.NewsAdapter;
 import com.example.countrynews.databinding.FragmentNewsBinding;
 import com.example.countrynews.model.NewsModel;
-import com.example.countrynews.model.TestModel;
 import com.example.countrynews.model.news.NewsHeadLines;
 import com.example.countrynews.model.news.NewsResponse;
-import com.example.countrynews.rest_client.BCRequests;
-import com.example.countrynews.test.OnFetchDataListener;
-import com.example.countrynews.test.RequestManager;
 import com.example.countrynews.viewModel.NewsFragmentViewModel;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class NewsFragment extends Fragment {
 
@@ -46,13 +34,13 @@ public class NewsFragment extends Fragment {
     //    public FragmentNewsBinding fragmentNewsBinding;
     private String country = "in";
     //    private String q = "bitcoin";
-    ArrayList<ArrayList<NewsResponse.Article>> arrayList;
+//    ArrayList<ArrayList<NewsResponse.Article>> arrayList;
     NewsAdapter newsAdapter;
-    ArrayList<NewsResponse.Article> newsResponse;
+//    ArrayList<NewsResponse.Article> newsResponse;
     ArrayList<NewsModel> modelArrayList;
     CustomAdapter customAdapter;
     public List<NewsHeadLines> newsHeadLinesList;
-    private com.example.countrynews.model.NewsResponse newsHeadLines;
+    private NewsResponse newsHeadLines;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -63,8 +51,10 @@ public class NewsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         newsHeadLinesList = new ArrayList<>();
+        newsAdapter=new NewsAdapter();
 //        RequestManager manager = new RequestManager(getActivity());
 //        manager.getNewsHeadLines(listener, "general", null);
+
 
     }
 
@@ -76,6 +66,11 @@ public class NewsFragment extends Fragment {
         fragmentNewsBinding = FragmentNewsBinding.inflate(getLayoutInflater());
         fragmentNewsBinding.setNewsHeadlines(newsHeadLines);
         fragmentNewsBinding.setLifecycleOwner(this);
+        fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        newsAdapter=new NewsAdapter(getActivity(),newsHeadLinesList);
+//        customAdapter = new CustomAdapter(getActivity(), newsHeadLinesList);
+        fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
+        fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
         return fragmentNewsBinding.getRoot();
     }
 
@@ -91,16 +86,14 @@ public class NewsFragment extends Fragment {
                     for (int i = 0; i <= size - 1; i++) {
                         newsHeadLinesList.add(list.get(i));
                     }
-                    fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-                    fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    customAdapter = new CustomAdapter(getActivity(), newsHeadLinesList);
-                    fragmentNewsBinding.recyclerViewNews.setAdapter(customAdapter);
+                    newsAdapter.getScannedData(newsHeadLinesList);
+
                 }
             });
-//            Call<com.example.countrynews.model.NewsResponse> call = BCRequests.getInstance().getBCRestService().callHeadlines(country, "business", null, api);
-//            call.enqueue(new Callback<com.example.countrynews.model.NewsResponse>() {
+//            Call<com.example.countrynews.model.news.NewsResponse> call = BCRequests.getInstance().getBCRestService().callHeadlines(country, "business", null, api);
+//            call.enqueue(new Callback<com.example.countrynews.model.news.NewsResponse>() {
 //                @Override
-//                public void onResponse(Call<com.example.countrynews.model.NewsResponse> call, Response<com.example.countrynews.model.NewsResponse> response) {
+//                public void onResponse(Call<com.example.countrynews.model.news.NewsResponse> call, Response<com.example.countrynews.model.news.NewsResponse> response) {
 //                    if (response.isSuccessful()) {
 //                        Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
 ////                        Log.e("==>", String.valueOf(response.body().getArticles().indexOf(modelArrayList)));
@@ -118,7 +111,7 @@ public class NewsFragment extends Fragment {
 //                }
 //
 //                @Override
-//                public void onFailure(Call<com.example.countrynews.model.NewsResponse> call, Throwable t) {
+//                public void onFailure(Call<com.example.countrynews.model.news.NewsResponse> call, Throwable t) {
 //
 //                }
 //            });
@@ -160,7 +153,7 @@ public class NewsFragment extends Fragment {
 
     }
 
-//    public static OnFetchDataListener<com.example.countrynews.model.NewsResponse> listener = new OnFetchDataListener<com.example.countrynews.model.NewsResponse>() {
+//    public static OnFetchDataListener<com.example.countrynews.model.news.NewsResponse> listener = new OnFetchDataListener<com.example.countrynews.model.news.NewsResponse>() {
 //        @Override
 //        public void onFetchData(List<NewsHeadLines> list, String message) {
 ////          shoeNews(list);

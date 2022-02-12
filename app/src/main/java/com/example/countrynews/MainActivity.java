@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutContainer,new NewsFragment())
+        getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutContainer,new SportsFragment())
                 .addToBackStack(null)
                 .commit();
     }
