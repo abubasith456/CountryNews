@@ -1,6 +1,5 @@
 package com.example.countrynews.adapter;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,36 +8,26 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.countrynews.databinding.ListViewRowNewsBinding;
-import com.example.countrynews.model.NewsModel;
 import com.example.countrynews.model.news.NewsHeadLines;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder> {
+public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.SportsViewHolder> {
 
-    private Activity activity;
     private List<NewsHeadLines> headLines;
-
-//    public NewsAdapter(Activity activity, List<NewsHeadLines> headLines) {
-//        this.activity = activity;
-//        this.headLines = headLines;
-//    }
 
     @NonNull
     @Override
-    public NewsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SportsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ListViewRowNewsBinding listViewRowNewsBinding = ListViewRowNewsBinding.inflate(layoutInflater, parent, false);
-        return new NewsAdapterViewHolder(listViewRowNewsBinding);
+        return new SportsViewHolder(listViewRowNewsBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewsAdapterViewHolder holder, int position) {
-//        headLines.get(position);
+    public void onBindViewHolder(@NonNull SportsViewHolder holder, int position) {
         holder.listViewRowNewsBinding.setNewsModel(headLines.get(position));
         holder.listViewRowNewsBinding.setImageUrl(headLines.get(position).getUrlToImage());
-
     }
 
     public void getScannedData(List<NewsHeadLines> headLines) {
@@ -56,14 +45,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
         }
     }
 
-    public static class NewsAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class SportsViewHolder extends RecyclerView.ViewHolder {
 
         ListViewRowNewsBinding listViewRowNewsBinding;
 
-        public NewsAdapterViewHolder(@NonNull ListViewRowNewsBinding listViewRowNewsBinding) {
+        public SportsViewHolder(@NonNull ListViewRowNewsBinding listViewRowNewsBinding) {
             super(listViewRowNewsBinding.getRoot());
             this.listViewRowNewsBinding = listViewRowNewsBinding;
         }
     }
+
 
 }

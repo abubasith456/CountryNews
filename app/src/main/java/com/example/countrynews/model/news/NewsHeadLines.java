@@ -1,6 +1,14 @@
 package com.example.countrynews.model.news;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.countrynews.R;
 import com.example.countrynews.model.Source;
+import com.squareup.picasso.Picasso;
 
 public class NewsHeadLines {
 
@@ -76,4 +84,12 @@ public class NewsHeadLines {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @BindingAdapter("newsImage")
+    public static void loadImage(ImageView view, String imageUrl) {
+        Glide.with(view.getContext())
+                .load(imageUrl)
+                .into(view);
+    }
+
 }

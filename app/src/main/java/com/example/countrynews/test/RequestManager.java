@@ -3,8 +3,7 @@ package com.example.countrynews.test;
 import android.app.Activity;
 import android.widget.Toast;
 
-import com.example.countrynews.model.news.NewsHeadLines;
-import com.example.countrynews.model.NewsResponse;
+import com.example.countrynews.model.news.NewsResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
