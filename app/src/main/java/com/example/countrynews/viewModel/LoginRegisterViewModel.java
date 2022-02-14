@@ -23,6 +23,7 @@ import com.example.countrynews.LoginFragment;
 import com.example.countrynews.NewsFragment;
 import com.example.countrynews.R;
 import com.example.countrynews.RegisterFragment;
+import com.example.countrynews.databinding.ActivityMainBinding;
 import com.example.countrynews.repositories.AuthenticationRepository;
 import com.example.countrynews.utils.Utils;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +45,8 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public MutableLiveData<Boolean> onClickResult = new MutableLiveData<>();
     public MutableLiveData<Boolean> onClickRegister = new MutableLiveData<>();
     public MutableLiveData<Boolean> onClickForgotResult = new MutableLiveData<>();
-
+    public MutableLiveData<Boolean> onAppBarVisible = new MutableLiveData<>();
+    public ActivityMainBinding activityMainBinding;
     private AuthenticationRepository repository;
     private MutableLiveData<FirebaseUser> userLoginData;
     private Application application;
@@ -56,14 +58,19 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public LoginRegisterViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
+        onAppBarVisible.setValue(false);
         repository = new AuthenticationRepository(application);
         userLoginData = repository.getFirebaseLoginUserMutableLiveData();
-
         //        loadUserDetails();
     }
 
     public MutableLiveData<FirebaseUser> getUserLoginData() {
         return userLoginData;
+    }
+
+    public void getBinding(ActivityMainBinding activityMainBinding) {
+        this.activityMainBinding = activityMainBinding;
+        repository.getBinding(activityMainBinding);
     }
 
     public void onRegisterLayoutClick(View view) {
@@ -148,7 +155,7 @@ public class LoginRegisterViewModel extends AndroidViewModel {
             Utils.hideSoftKeyboard(activity);
             if (Utils.isNetworkConnectionAvailable(activity)) {
                 if (validateRegister()) {
-                repository.register(EmailRegister.getValue(), PasswordRegister.getValue(), NameRegister.getValue());
+                    repository.register(EmailRegister.getValue(), PasswordRegister.getValue(), NameRegister.getValue());
                 }
             } else {
                 Toast.makeText(application, "Please check the internet connection", Toast.LENGTH_SHORT).show();

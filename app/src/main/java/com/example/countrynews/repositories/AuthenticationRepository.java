@@ -11,8 +11,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.countrynews.NewsFragment;
 import com.example.countrynews.R;
+import com.example.countrynews.databinding.ActivityMainBinding;
 import com.example.countrynews.model.UserModel;
 
+import com.example.countrynews.viewModel.LoginRegisterViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,6 +33,7 @@ public class AuthenticationRepository {
     private FirebaseFirestore firebaseFirestore;
     private UserModel userModel;
     private FragmentActivity fragmentActivity;
+    ActivityMainBinding activityMainBinding;
 
 
     public MutableLiveData<FirebaseUser> getFirebaseLoginUserMutableLiveData() {
@@ -52,6 +55,10 @@ public class AuthenticationRepository {
 
     public void getFragment(FragmentActivity loginFragment) {
         this.fragmentActivity = loginFragment;
+    }
+
+    public void getBinding(ActivityMainBinding activityMainBinding) {
+        this.activityMainBinding = activityMainBinding;
     }
 
     public void register(String email, String pass, String name) {

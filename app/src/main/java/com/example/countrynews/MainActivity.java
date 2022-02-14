@@ -1,24 +1,31 @@
 package com.example.countrynews;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.example.countrynews.databinding.ActivityMainBinding;
 import com.example.countrynews.utils.Utils;
-import com.google.firebase.FirebaseApp;
+import com.example.countrynews.viewModel.LoginRegisterViewModel;
+import com.example.countrynews.viewModel.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MainActivityViewModel mainActivityViewModel;
+    private ActivityMainBinding activityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        activityMainBinding.setMainActivityViewModel(mainActivityViewModel);
+//        mainActivityViewModel.getBinding(activityMainBinding);
         Utils.hideSoftKeyboard(this);
         getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutContainer, new LoginFragment(), "Login")
                 .addToBackStack(null)
