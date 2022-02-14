@@ -9,10 +9,11 @@
     </data>
 
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/purple_200"
         tools:context=".NewsFragment">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -21,5 +22,5 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/list_view_row_news"/>
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

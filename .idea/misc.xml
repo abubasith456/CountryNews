@@ -7,10 +7,12 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.181842041015625" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_news.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_offline_news.xml" value="0.23385416666666667" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_sports.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/list_view_news.xml" value="0.11354166666666667" />
         <entry key="app/src/main/res/layout/list_view_row_news.xml" value="0.15363922119140624" />
+        <entry key="app/src/main/res/menu/more_menu.xml" value="0.24791666666666667" />
       </map>
     </option>
   </component>

@@ -2,9 +2,11 @@ package com.example.countrynews;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.countrynews.adapter.CustomAdapter;
 import com.example.countrynews.adapter.NewsAdapter;
@@ -20,6 +23,7 @@ import com.example.countrynews.databinding.FragmentNewsBinding;
 import com.example.countrynews.model.NewsModel;
 import com.example.countrynews.model.news.NewsHeadLines;
 import com.example.countrynews.model.news.NewsResponse;
+import com.example.countrynews.test.RequestManager;
 import com.example.countrynews.viewModel.NewsFragmentViewModel;
 
 import java.util.ArrayList;
@@ -36,7 +40,7 @@ public class NewsFragment extends Fragment {
     //    private String q = "bitcoin";
 //    ArrayList<ArrayList<NewsResponse.Article>> arrayList;
     NewsAdapter newsAdapter;
-//    ArrayList<NewsResponse.Article> newsResponse;
+    //    ArrayList<NewsResponse.Article> newsResponse;
     ArrayList<NewsModel> modelArrayList;
     CustomAdapter customAdapter;
     public List<NewsHeadLines> newsHeadLinesList;
@@ -51,10 +55,24 @@ public class NewsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         newsHeadLinesList = new ArrayList<>();
-        newsAdapter=new NewsAdapter();
+        newsAdapter = new NewsAdapter();
 //        RequestManager manager = new RequestManager(getActivity());
 //        manager.getNewsHeadLines(listener, "general", null);
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
+//                fragmentLoginBinding.layoutLoginPage.setVisibility(View.GONE);
+                Fragment loginFragment = new LoginFragment();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.layoutLogin, loginFragment);
+//                transaction.addToBackStack(null);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
     }
 
@@ -82,7 +100,7 @@ public class NewsFragment extends Fragment {
                 @Override
                 public void onChanged(List<NewsHeadLines> list) {
                     Log.e("=====> ", String.valueOf(list));
-                    int size=list.size();
+                    int size = list.size();
                     for (int i = 0; i <= size - 1; i++) {
                         newsHeadLinesList.add(list.get(i));
                     }

@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,6 +32,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -43,7 +46,7 @@ public class LoginFragment extends Fragment {
         fragmentLoginBinding = FragmentLoginBinding.inflate(getLayoutInflater());
         fragmentLoginBinding.setLoginregisterViewModel(loginRegisterViewModel);
         fragmentLoginBinding.setLifecycleOwner(this);
-        loginRegisterViewModel.getFragment(this);
+        loginRegisterViewModel.getFragment(getActivity());
         return fragmentLoginBinding.getRoot();
 
     }
@@ -55,11 +58,12 @@ public class LoginFragment extends Fragment {
             fragmentLoginBinding.layoutRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    RegisterFragment registerFragmentFragment = new RegisterFragment();
-
-                    FragmentTransaction transaction= getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.layoutLoginPage,registerFragmentFragment);
+//                    fragmentLoginBinding.layoutLoginPage.setVisibility(View.GONE);
+                    Fragment registerFragmentFragment = new RegisterFragment();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.layoutLogin, registerFragmentFragment,"Login");
                     transaction.addToBackStack(null);
+//                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
             });
@@ -68,4 +72,6 @@ public class LoginFragment extends Fragment {
 
         }
     }
+
+
 }

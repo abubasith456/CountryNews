@@ -6,11 +6,17 @@ import android.util.Patterns;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 
 import com.example.countrynews.LoginFragment;
+import com.example.countrynews.NewsFragment;
+import com.example.countrynews.R;
 import com.example.countrynews.repositories.AuthenticationRepository;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -37,6 +43,7 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     private Application application;
     //    private ActivityLoginBinding activityLoginBinding;
     private LoginFragment loginFragment;
+    public FragmentActivity activity;
 
     public MutableLiveData<FirebaseUser> getUserLoginData() {
         return userLoginData;
@@ -59,8 +66,9 @@ public class LoginRegisterViewModel extends AndroidViewModel {
         return onClickResult;
     }
 
-    public void getFragment(LoginFragment loginFragment) {
-        this.loginFragment = loginFragment;
+    public void getFragment(FragmentActivity loginFragment) {
+//        this.loginFragment = loginFragment;
+        this.activity=loginFragment;
     }
 
     public MutableLiveData<Boolean> onClickShow(View view) {
@@ -100,7 +108,12 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public void onLoginClick(View view) {
         try {
             if (validateLogin()) {
-                repository.login(EmailLogin.getValue(), PasswordLogin.getValue());
+                Fragment fragment=new NewsFragment();
+                FragmentTransaction fragmentTransaction=activity.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.layoutLogin, fragment);
+                fragmentTransaction.addToBackStack("Login");
+                fragmentTransaction.commit();
+//                repository.login(EmailLogin.getValue(), PasswordLogin.getValue());
             }
         } catch (Exception exception) {
             Log.e("Error login==> ", "" + exception);
@@ -110,7 +123,12 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public void onRegisterClick(View view) {
         try {
             if (validateRegister()) {
-                repository.register(EmailRegister.getValue(), PasswordRegister.getValue(), NameRegister.getValue());
+                Fragment fragment=new NewsFragment();
+                FragmentTransaction fragmentTransaction=activity.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.layoutLogin, fragment);
+                fragmentTransaction.addToBackStack("Login");
+                fragmentTransaction.commit();
+//                repository.register(EmailRegister.getValue(), PasswordRegister.getValue(), NameRegister.getValue());
             }
         } catch (Exception exception) {
             Log.e("Error register ==> ", "" + exception);
