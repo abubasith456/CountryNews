@@ -88,7 +88,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
                     String url=headLines.get(getAdapterPosition()).getUrl();
                     Fragment intentFragment=new NewsDetailsFragment(title,description,author,dateAndTime,urlToImage,url);
                     FragmentTransaction transaction=activity.getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.layoutLogin,intentFragment);
+                    transaction.replace(R.id.frameLayoutContainer,intentFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
 

@@ -4,8 +4,13 @@ import android.app.Application;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.countrynews.NewsFragment;
+import com.example.countrynews.R;
 import com.example.countrynews.model.UserModel;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +30,7 @@ public class AuthenticationRepository {
     private FirebaseAuth auth;
     private FirebaseFirestore firebaseFirestore;
     private UserModel userModel;
+    private FragmentActivity fragmentActivity;
 
 
     public MutableLiveData<FirebaseUser> getFirebaseLoginUserMutableLiveData() {
@@ -39,9 +45,13 @@ public class AuthenticationRepository {
         this.application = application;
         firebaseLoginUserMutableLiveData = new MutableLiveData<>();
         userLoggedMutableLiveData = new MutableLiveData<>();
-//        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userModel = new UserModel();
+    }
+
+    public void getFragment(FragmentActivity loginFragment) {
+        this.fragmentActivity = loginFragment;
     }
 
     public void register(String email, String pass, String name) {
@@ -49,13 +59,47 @@ public class AuthenticationRepository {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-//                    Intent intent = new Intent(application.getApplicationContext(), ScanBarCodeActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    intent.putExtra("indicate", "new");
-//                    application.startActivities(new Intent[]{intent});
+                    Fragment fragment = new NewsFragment();
+                    FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+                    fragmentTransaction.addToBackStack("Login");
+                    fragmentTransaction.commit();
                     storeUserInputData(name, email);
                 } else {
                     Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
+    public void login(String email, String pass) {
+        auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Fragment fragment = new NewsFragment();
+                    FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    firebaseLoginUserMutableLiveData.postValue(auth.getCurrentUser());
+                } else {
+                    Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public void forgot(String email) {
+        auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(application.getApplicationContext(), "Link sent to your email", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(application.getApplicationContext(), "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -73,34 +117,6 @@ public class AuthenticationRepository {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(application.getApplicationContext(), "User data uploaded", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(application.getApplicationContext(), "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    public void login(String email, String pass) {
-        auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    firebaseLoginUserMutableLiveData.postValue(auth.getCurrentUser());
-                } else {
-
-                    Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    public void forgot(String email) {
-        auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(application.getApplicationContext(), "Link sent to your email", Toast.LENGTH_SHORT).show();
-
                 } else {
                     Toast.makeText(application.getApplicationContext(), "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
                 }

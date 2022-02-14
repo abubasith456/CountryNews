@@ -6,6 +6,7 @@ import android.app.Application;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.countrynews.LoginFragment;
 import com.example.countrynews.NewsFragment;
 import com.example.countrynews.R;
+import com.example.countrynews.RegisterFragment;
 import com.example.countrynews.repositories.AuthenticationRepository;
 import com.example.countrynews.utils.Utils;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,8 +52,28 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     private LoginFragment loginFragment;
     public FragmentActivity activity;
 
+
+    public LoginRegisterViewModel(@NonNull Application application) {
+        super(application);
+        this.application = application;
+        repository = new AuthenticationRepository(application);
+        userLoginData = repository.getFirebaseLoginUserMutableLiveData();
+
+        //        loadUserDetails();
+    }
+
     public MutableLiveData<FirebaseUser> getUserLoginData() {
         return userLoginData;
+    }
+
+    public void onRegisterLayoutClick(View view) {
+        Utils.hideSoftKeyboard(activity);
+        Fragment registerFragmentFragment = new RegisterFragment();
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutContainer, registerFragmentFragment);
+        transaction.addToBackStack(null);
+//      transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public MutableLiveData<Boolean> onclickHide(View view) {
@@ -74,19 +96,21 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public void getFragment(FragmentActivity loginFragment) {
 //        this.loginFragment = loginFragment;
         this.activity = loginFragment;
+        repository.getFragment(loginFragment);
     }
 
     public MutableLiveData<Boolean> onClickShow(View view) {
 //        EmailError.setValue(null);
 //        PasswordError.setValue(null);
 //
-//        EmailLogin.setValue(null);
-//        PasswordLogin.setValue(null);
 //
 //        onClickResult.setValue(true);
 //        onClickRegister.setValue(true);
+
+
         return onClickResult;
     }
+
 
     public MutableLiveData<Boolean> onForgotPasswordClick(View view) {
         EmailError.setValue(null);
@@ -102,25 +126,14 @@ public class LoginRegisterViewModel extends AndroidViewModel {
 //    }
 
 
-    public LoginRegisterViewModel(@NonNull Application application) {
-        super(application);
-        this.application = application;
-//        repository = new AuthenticationRepository(application);
-//        userLoginData = repository.getFirebaseLoginUserMutableLiveData();
-//        loadUserDetails();
-    }
-
     public void onLoginClick(View view) {
         try {
             Utils.hideSoftKeyboard(activity);
             if (Utils.isNetworkConnectionAvailable(activity)) {
                 if (validateLogin()) {
-                    Fragment fragment = new NewsFragment();
-                    FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.layoutLogin, fragment);
-                    fragmentTransaction.addToBackStack("Login");
-                    fragmentTransaction.commit();
-//                repository.login(EmailLogin.getValue(), PasswordLogin.getValue());
+                    repository.login(EmailLogin.getValue(), PasswordLogin.getValue());
+                    EmailLogin.setValue(null);
+                    PasswordLogin.setValue(null);
                 }
             } else {
                 Toast.makeText(application, "Please check the internet connection", Toast.LENGTH_SHORT).show();
@@ -135,12 +148,7 @@ public class LoginRegisterViewModel extends AndroidViewModel {
             Utils.hideSoftKeyboard(activity);
             if (Utils.isNetworkConnectionAvailable(activity)) {
                 if (validateRegister()) {
-                    Fragment fragment = new NewsFragment();
-                    FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.layoutLogin, fragment);
-                    fragmentTransaction.addToBackStack("Login");
-                    fragmentTransaction.commit();
-//                repository.register(EmailRegister.getValue(), PasswordRegister.getValue(), NameRegister.getValue());
+                repository.register(EmailRegister.getValue(), PasswordRegister.getValue(), NameRegister.getValue());
                 }
             } else {
                 Toast.makeText(application, "Please check the internet connection", Toast.LENGTH_SHORT).show();

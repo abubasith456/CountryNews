@@ -54,6 +54,7 @@ public class RegisterFragment extends Fragment {
         fragmentRegisterBinding = FragmentRegisterBinding.inflate(getLayoutInflater());
         fragmentRegisterBinding.setLoginregisterViewModel(loginRegisterViewModel);
         fragmentRegisterBinding.setLifecycleOwner(this);
+        loginRegisterViewModel.getFragment(getActivity());
         // Inflate the layout for this fragment
         return fragmentRegisterBinding.getRoot();
 
@@ -69,7 +70,7 @@ public class RegisterFragment extends Fragment {
 //                fragmentLoginBinding.layoutLoginPage.setVisibility(View.GONE);
                 Fragment registerFragmentFragment = new RegisterFragment();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.layoutLogin, registerFragmentFragment,"Register");
+                transaction.replace(R.id.layoutLogin, registerFragmentFragment, "Register");
                 transaction.addToBackStack(null);
 //                    transaction.addToBackStack(null);
                 transaction.commit();

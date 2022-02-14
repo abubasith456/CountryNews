@@ -25,6 +25,7 @@ import com.example.countrynews.model.news.NewsHeadLines;
 import com.example.countrynews.model.news.NewsResponse;
 import com.example.countrynews.test.RequestManager;
 import com.example.countrynews.viewModel.NewsFragmentViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class NewsFragment extends Fragment {
     private NewsResponse newsHeadLines;
     private NewsAdapter newsAdapter;
     public List<NewsHeadLines> newsHeadLinesList;
+    private FirebaseAuth auth;
 
 
     public NewsFragment() {
@@ -57,23 +59,25 @@ public class NewsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         newsHeadLinesList = new ArrayList<>();
         newsAdapter = new NewsAdapter();
+        auth = FirebaseAuth.getInstance();
 //        RequestManager manager = new RequestManager(getActivity());
 //        manager.getNewsHeadLines(listener, "general", null);
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
-//                fragmentLoginBinding.layoutLoginPage.setVisibility(View.GONE);
-                Fragment loginFragment = new LoginFragment();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.layoutLogin, loginFragment);
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
+////                fragmentLoginBinding.layoutLoginPage.setVisibility(View.GONE);
+//                auth.signOut();
+//                Fragment loginFragment = new LoginFragment();
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frameLayoutContainer, loginFragment);
+////                transaction.addToBackStack(null);
 //                transaction.addToBackStack(null);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+//                transaction.commit();
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
     }
 
@@ -105,7 +109,7 @@ public class NewsFragment extends Fragment {
                     for (int i = 0; i <= size - 1; i++) {
                         newsHeadLinesList.add(list.get(i));
                     }
-                    newsAdapter.getScannedData(newsHeadLinesList,getActivity());
+                    newsAdapter.getScannedData(newsHeadLinesList, getActivity());
 
                 }
             });
