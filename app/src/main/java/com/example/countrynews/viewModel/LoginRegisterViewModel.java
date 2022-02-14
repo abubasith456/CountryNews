@@ -1,9 +1,13 @@
 package com.example.countrynews.viewModel;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 import android.app.Application;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +22,7 @@ import com.example.countrynews.LoginFragment;
 import com.example.countrynews.NewsFragment;
 import com.example.countrynews.R;
 import com.example.countrynews.repositories.AuthenticationRepository;
+import com.example.countrynews.utils.Utils;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginRegisterViewModel extends AndroidViewModel {
@@ -68,7 +73,7 @@ public class LoginRegisterViewModel extends AndroidViewModel {
 
     public void getFragment(FragmentActivity loginFragment) {
 //        this.loginFragment = loginFragment;
-        this.activity=loginFragment;
+        this.activity = loginFragment;
     }
 
     public MutableLiveData<Boolean> onClickShow(View view) {
@@ -107,13 +112,18 @@ public class LoginRegisterViewModel extends AndroidViewModel {
 
     public void onLoginClick(View view) {
         try {
-            if (validateLogin()) {
-                Fragment fragment=new NewsFragment();
-                FragmentTransaction fragmentTransaction=activity.getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.layoutLogin, fragment);
-                fragmentTransaction.addToBackStack("Login");
-                fragmentTransaction.commit();
+            Utils.hideSoftKeyboard(activity);
+            if (Utils.isNetworkConnectionAvailable(activity)) {
+                if (validateLogin()) {
+                    Fragment fragment = new NewsFragment();
+                    FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.layoutLogin, fragment);
+                    fragmentTransaction.addToBackStack("Login");
+                    fragmentTransaction.commit();
 //                repository.login(EmailLogin.getValue(), PasswordLogin.getValue());
+                }
+            } else {
+                Toast.makeText(application, "Please check the internet connection", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception exception) {
             Log.e("Error login==> ", "" + exception);
@@ -122,17 +132,24 @@ public class LoginRegisterViewModel extends AndroidViewModel {
 
     public void onRegisterClick(View view) {
         try {
-            if (validateRegister()) {
-                Fragment fragment=new NewsFragment();
-                FragmentTransaction fragmentTransaction=activity.getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.layoutLogin, fragment);
-                fragmentTransaction.addToBackStack("Login");
-                fragmentTransaction.commit();
+            Utils.hideSoftKeyboard(activity);
+            if (Utils.isNetworkConnectionAvailable(activity)) {
+                if (validateRegister()) {
+                    Fragment fragment = new NewsFragment();
+                    FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.layoutLogin, fragment);
+                    fragmentTransaction.addToBackStack("Login");
+                    fragmentTransaction.commit();
 //                repository.register(EmailRegister.getValue(), PasswordRegister.getValue(), NameRegister.getValue());
+                }
+            } else {
+                Toast.makeText(application, "Please check the internet connection", Toast.LENGTH_SHORT).show();
             }
-        } catch (Exception exception) {
+        } catch (
+                Exception exception) {
             Log.e("Error register ==> ", "" + exception);
         }
+
     }
 
     public void onForgotClick(View view) {

@@ -3,62 +3,53 @@ package com.example.countrynews;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link NewsDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.countrynews.databinding.FragmentNewsBinding;
+import com.example.countrynews.databinding.FragmentNewsDetailsBinding;
+import com.example.countrynews.model.DetailsModel;
+import com.example.countrynews.viewModel.NewsDetailsViewModel;
+
+
 public class NewsDetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private String title, description, author, dateAndTime, urlToImage, url;
+    private FragmentNewsDetailsBinding fragmentNewsDetailsBinding;
+    private NewsDetailsViewModel newsDetailsViewModel;
+    private DetailsModel detailsModel;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public NewsDetailsFragment(String title, String description, String author, String dateAndTime, String urlToImage, String url) {
+        this.title = title;
+        this.description = description;
+        this.author = author;
+        this.dateAndTime = dateAndTime;
+        this.urlToImage = urlToImage;
+        this.url = url;
 
-    public NewsDetailsFragment() {
-        // Required empty public constructor
+        detailsModel = new DetailsModel(title, description, author, dateAndTime, urlToImage, url);
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsDetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static NewsDetailsFragment newInstance(String param1, String param2) {
-        NewsDetailsFragment fragment = new NewsDetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news_details, container, false);
+        newsDetailsViewModel = new ViewModelProvider(requireActivity()).get(NewsDetailsViewModel.class);
+        fragmentNewsDetailsBinding = FragmentNewsDetailsBinding.inflate(getLayoutInflater());
+        fragmentNewsDetailsBinding.setDetailsModel(detailsModel);
+        fragmentNewsDetailsBinding.setImageUrl(urlToImage);
+        fragmentNewsDetailsBinding.setFragmentDetailsViewModel(newsDetailsViewModel);
+        newsDetailsViewModel.getUrl(url);
+        return fragmentNewsDetailsBinding.getRoot();
     }
 }

@@ -33,18 +33,19 @@ public class NewsFragment extends Fragment {
 
     private FragmentNewsBinding fragmentNewsBinding;
     private NewsFragmentViewModel newsFragmentViewModel;
-    private static List<NewsHeadLines> list;
-    String api = "a49844b91eb748bb9d3458aa0794db69";
-    //    public FragmentNewsBinding fragmentNewsBinding;
-    private String country = "in";
-    //    private String q = "bitcoin";
-//    ArrayList<ArrayList<NewsResponse.Article>> arrayList;
-    NewsAdapter newsAdapter;
-    //    ArrayList<NewsResponse.Article> newsResponse;
-    ArrayList<NewsModel> modelArrayList;
-    CustomAdapter customAdapter;
-    public List<NewsHeadLines> newsHeadLinesList;
+    //    private static List<NewsHeadLines> list;
+//    private String api = "a49844b91eb748bb9d3458aa0794db69";
+//    public FragmentNewsBinding fragmentNewsBinding;
+//    private String country = "in";
+//    private String q = "bitcoin";
+////  ArrayList<ArrayList<NewsResponse.Article>> arrayList;
+//    ArrayList<NewsResponse.Article> newsResponse;
+//    ArrayList<NewsModel> modelArrayList;
+//    CustomAdapter customAdapter;
     private NewsResponse newsHeadLines;
+    private NewsAdapter newsAdapter;
+    public List<NewsHeadLines> newsHeadLinesList;
+
 
     public NewsFragment() {
         // Required empty public constructor
@@ -104,7 +105,7 @@ public class NewsFragment extends Fragment {
                     for (int i = 0; i <= size - 1; i++) {
                         newsHeadLinesList.add(list.get(i));
                     }
-                    newsAdapter.getScannedData(newsHeadLinesList);
+                    newsAdapter.getScannedData(newsHeadLinesList,getActivity());
 
                 }
             });

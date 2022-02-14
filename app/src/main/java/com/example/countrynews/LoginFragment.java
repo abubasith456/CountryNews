@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.countrynews.databinding.FragmentLoginBinding;
+import com.example.countrynews.utils.Utils;
 import com.example.countrynews.viewModel.LoginRegisterViewModel;
 
 
@@ -55,13 +56,14 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try {
+            Utils.hideSoftKeyboard(getActivity());
             fragmentLoginBinding.layoutRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 //                    fragmentLoginBinding.layoutLoginPage.setVisibility(View.GONE);
                     Fragment registerFragmentFragment = new RegisterFragment();
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.layoutLogin, registerFragmentFragment,"Login");
+                    transaction.replace(R.id.layoutLogin, registerFragmentFragment);
                     transaction.addToBackStack(null);
 //                    transaction.addToBackStack(null);
                     transaction.commit();

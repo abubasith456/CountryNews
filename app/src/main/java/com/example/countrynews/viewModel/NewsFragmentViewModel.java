@@ -2,6 +2,7 @@ package com.example.countrynews.viewModel;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -22,6 +23,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
     private String api = "a49844b91eb748bb9d3458aa0794db69";
     private String country = "in";
     private String category = "general";
+    private Application application;
     private MutableLiveData<NewsHeadLines> responseMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<NewsHeadLines>> newsHeadlines = new MutableLiveData<>();
     public List<NewsHeadLines> newsHeadLinesList;
@@ -29,7 +31,12 @@ public class NewsFragmentViewModel extends AndroidViewModel {
 
     public NewsFragmentViewModel(@NonNull Application application) {
         super(application);
+        this.application=application;
         newsHeadLinesList = new ArrayList<>();
+    }
+
+    public void getAdapterPosition(List<NewsHeadLines> newsHeadLines){
+        Toast.makeText(application.getApplicationContext(), ""+newsHeadLines.get(0), Toast.LENGTH_SHORT).show();
     }
 
     public MutableLiveData<List<NewsHeadLines>> getNewsHeadlines() {
