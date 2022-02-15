@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.countrynews.OfflineNewsFragment;
 import com.example.countrynews.adapter.OfflineNewsAdapter;
 import com.example.countrynews.db.AppDatabase;
-import com.example.countrynews.model.News;
+import com.example.countrynews.model.offlineNews.News;
 
 import java.util.List;
 

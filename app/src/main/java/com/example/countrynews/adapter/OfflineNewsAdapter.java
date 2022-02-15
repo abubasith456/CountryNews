@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.countrynews.databinding.ListViewOfflineNewsBinding;
-import com.example.countrynews.model.News;
+import com.example.countrynews.model.offlineNews.News;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.countrynews.model.News;
+import com.example.countrynews.model.offlineNews.News;
 
 import java.util.List;
 

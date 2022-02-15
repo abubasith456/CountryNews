@@ -10,11 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.countrynews.databinding.FragmentNewsBinding;
 import com.example.countrynews.databinding.FragmentNewsDetailsBinding;
 import com.example.countrynews.db.AppDatabase;
-import com.example.countrynews.model.News;
-import com.example.countrynews.model.DetailsModel;
+import com.example.countrynews.model.offlineNews.News;
+import com.example.countrynews.model.newsDetails.DetailsModel;
 import com.example.countrynews.viewModel.NewsDetailsViewModel;
 
 

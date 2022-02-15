@@ -1,4 +1,4 @@
-package com.example.countrynews.model;
+package com.example.countrynews.model.newsDetails;
 
 import android.widget.ImageView;
 

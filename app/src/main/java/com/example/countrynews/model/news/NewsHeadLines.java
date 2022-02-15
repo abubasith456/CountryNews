@@ -5,10 +5,6 @@ import android.widget.ImageView;
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.countrynews.R;
-import com.example.countrynews.model.Source;
-import com.squareup.picasso.Picasso;
 
 public class NewsHeadLines {
 

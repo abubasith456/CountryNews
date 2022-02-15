@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.countrynews.adapter.OfflineNewsAdapter;
 import com.example.countrynews.databinding.FragmentOfflineNewsBinding;
-import com.example.countrynews.model.News;
+import com.example.countrynews.model.offlineNews.News;
 import com.example.countrynews.viewModel.OfflineNewsViewModel;
 
 import java.util.List;

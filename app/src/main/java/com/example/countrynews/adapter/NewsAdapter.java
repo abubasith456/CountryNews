@@ -18,12 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.countrynews.NewsDetailsFragment;
 import com.example.countrynews.R;
 import com.example.countrynews.databinding.ListViewRowNewsBinding;
-import com.example.countrynews.model.NewsModel;
 import com.example.countrynews.model.news.NewsHeadLines;
-import com.example.countrynews.viewModel.LoginRegisterViewModel;
 import com.example.countrynews.viewModel.NewsFragmentViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder> {
@@ -31,11 +28,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
     private FragmentActivity activity;
     List<NewsHeadLines> headLines;
     private NewsFragmentViewModel newsFragmentViewModel;
-
-//    public NewsAdapter(Activity activity, List<NewsHeadLines> headLines) {
-//        this.activity = activity;
-//        this.headLines = headLines;
-//    }
 
     @NonNull
     @Override
@@ -47,7 +39,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
     @Override
     public void onBindViewHolder(@NonNull NewsAdapterViewHolder holder, int position) {
-
         final NewsHeadLines newsHeadLines = headLines.get(position);
         holder.listViewRowNewsBinding.setNewsModel(newsHeadLines);
         holder.listViewRowNewsBinding.setImageUrl(newsHeadLines.getUrlToImage());
@@ -56,7 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
     public void getNewsData(List<NewsHeadLines> headLines, FragmentActivity activity) {
         this.headLines = headLines;
-        this.activity=activity;
+        this.activity = activity;
         notifyDataSetChanged();
     }
 
@@ -81,15 +72,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
                 @Override
                 public void onClick(View view) {
                     Log.e("==>", "" + headLines.get(getAdapterPosition()).getAuthor());
-                    String title=headLines.get(getAdapterPosition()).getTitle();
-                    String description=headLines.get(getAdapterPosition()).getDescription();
-                    String author=headLines.get(getAdapterPosition()).getAuthor();
-                    String dateAndTime=headLines.get(getAdapterPosition()).getPublishedAt();
-                    String urlToImage=headLines.get(getAdapterPosition()).getUrlToImage();
-                    String url=headLines.get(getAdapterPosition()).getUrl();
-                    Fragment intentFragment=new NewsDetailsFragment(title,description,author,dateAndTime,urlToImage,url);
-                    FragmentTransaction transaction=activity.getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frameLayoutContainer,intentFragment);
+                    String title = headLines.get(getAdapterPosition()).getTitle();
+                    String description = headLines.get(getAdapterPosition()).getDescription();
+                    String author = headLines.get(getAdapterPosition()).getAuthor();
+                    String dateAndTime = headLines.get(getAdapterPosition()).getPublishedAt();
+                    String urlToImage = headLines.get(getAdapterPosition()).getUrlToImage();
+                    String url = headLines.get(getAdapterPosition()).getUrl();
+                    Fragment intentFragment = new NewsDetailsFragment(title, description, author, dateAndTime, urlToImage, url);
+                    FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frameLayoutContainer, intentFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
 
