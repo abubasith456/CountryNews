@@ -28,6 +28,7 @@ import java.util.HashMap;
 public class AuthenticationRepository {
     private Application application;
     private MutableLiveData<FirebaseUser> firebaseLoginUserMutableLiveData;
+    private MutableLiveData<Boolean> onShowIcon;
     private MutableLiveData<Boolean> userLoggedMutableLiveData;
     private FirebaseAuth auth;
     private FirebaseFirestore firebaseFirestore;
@@ -38,6 +39,10 @@ public class AuthenticationRepository {
 
     public MutableLiveData<FirebaseUser> getFirebaseLoginUserMutableLiveData() {
         return firebaseLoginUserMutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> getOnShowIcon(){
+        return onShowIcon;
     }
 
     public MutableLiveData<Boolean> getUserLoggedMutableLiveData() {

@@ -1,13 +1,18 @@
 package com.example.countrynews.viewModel;
 
 import android.app.Application;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.countrynews.NewsFragment;
+import com.example.countrynews.model.Category;
 import com.example.countrynews.model.news.NewsResponse;
 import com.example.countrynews.model.news.NewsHeadLines;
 import com.example.countrynews.rest_client.BCRequests;
@@ -26,17 +31,23 @@ public class NewsFragmentViewModel extends AndroidViewModel {
     private Application application;
     private MutableLiveData<NewsHeadLines> responseMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<NewsHeadLines>> newsHeadlines = new MutableLiveData<>();
+    private MutableLiveData<List<NewsHeadLines>> categoryNews = new MutableLiveData<>();
     public List<NewsHeadLines> newsHeadLinesList;
+    private NewsFragment newsFragment;
 
 
     public NewsFragmentViewModel(@NonNull Application application) {
         super(application);
-        this.application=application;
+        this.application = application;
         newsHeadLinesList = new ArrayList<>();
     }
 
-    public void getAdapterPosition(List<NewsHeadLines> newsHeadLines){
-        Toast.makeText(application.getApplicationContext(), ""+newsHeadLines.get(0), Toast.LENGTH_SHORT).show();
+    public void getFragment(NewsFragment newsFragment) {
+        this.newsFragment = newsFragment;
+    }
+
+    public void getAdapterPosition(List<NewsHeadLines> newsHeadLines) {
+        Toast.makeText(application.getApplicationContext(), "" + newsHeadLines.get(0), Toast.LENGTH_SHORT).show();
     }
 
     public MutableLiveData<List<NewsHeadLines>> getNewsHeadlines() {
@@ -99,7 +110,68 @@ public class NewsFragmentViewModel extends AndroidViewModel {
         } catch (Exception exception) {
             Log.e("Erroe Call ==>", exception.getMessage());
         }
-
         return newsHeadlines;
+    }
+
+    public MutableLiveData<List<NewsHeadLines>> getCategoryNews() {
+        return categoryNews;
+    }
+
+    public void onCategoryClick(View view) {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(newsFragment.getActivity());
+            builder.setTitle("Select Category")
+                    .setItems(Category.selectCategory, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String selectedCategory = Category.selectCategory[which];
+                            loadFilterItems(selectedCategory);
+//                            textViewCategoryName.setText(selectedCategory);
+//                        if (selectedCategory.equals("All")) {
+//                            loadAllItems();
+//                        } else {
+//
+//                        }
+                        }
+                    }).show();
+        } catch (Exception exception) {
+            Log.e("Error ==> ", "" + exception);
+        }
+    }
+
+    private void loadFilterItems(String selectedCategory) {
+        try {
+            Call<NewsResponse> call = BCRequests.getInstance().getBCRestService().callHeadlines(country, selectedCategory, null, api);
+            call.enqueue(new Callback<NewsResponse>() {
+                @Override
+                public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
+                    if (response.isSuccessful()) {
+                        Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
+//                        Log.e("==>", String.valueOf(response.body().getArticles().indexOf(modelArrayList)));
+//                        newsHeadLinesList.clear();
+//                        newsHeadLinesList = new ArrayList<>();
+                        int size = response.body().getArticles().size();
+                        response.body().getArticles().indexOf(call);
+                        for (int i = 0; i <= size - 1; i++) {
+//                            newsHeadLinesList.add(response.body().getArticles().get(i));
+                            categoryNews.postValue(response.body().getArticles());
+//                            fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
+//                            fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                            customAdapter = new CustomAdapter(getActivity(), newsHeadLinesList);
+//                            fragmentNewsBinding.recyclerViewNews.setAdapter(customAdapter);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<NewsResponse> call, Throwable t) {
+
+                }
+            });
+
+        } catch (Exception exception) {
+            Log.e("Error ==> ", "" + exception);
+        }
+
     }
 }

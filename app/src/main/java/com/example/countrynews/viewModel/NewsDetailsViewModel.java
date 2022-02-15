@@ -1,14 +1,19 @@
 package com.example.countrynews.viewModel;
 
 import android.app.Application;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.countrynews.model.Category;
 
 public class NewsDetailsViewModel extends AndroidViewModel {
 
@@ -31,6 +36,5 @@ public class NewsDetailsViewModel extends AndroidViewModel {
         getApplication().getApplicationContext().startActivity(browserIntent);
 //        Toast.makeText(getApplication(), ""+url, Toast.LENGTH_SHORT).show();
     }
-
 
 }

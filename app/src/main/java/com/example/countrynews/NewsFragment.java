@@ -89,11 +89,8 @@ public class NewsFragment extends Fragment {
         fragmentNewsBinding = FragmentNewsBinding.inflate(getLayoutInflater());
         fragmentNewsBinding.setNewsHeadlines(newsHeadLines);
         fragmentNewsBinding.setLifecycleOwner(this);
-        fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        newsAdapter=new NewsAdapter(getActivity(),newsHeadLinesList);
-//        customAdapter = new CustomAdapter(getActivity(), newsHeadLinesList);
-        fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-        fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
+        newsFragmentViewModel.getFragment(NewsFragment.this);
+        fragmentNewsBinding.setNewsViewModel(newsFragmentViewModel);
         return fragmentNewsBinding.getRoot();
     }
 
@@ -109,70 +106,42 @@ public class NewsFragment extends Fragment {
                     for (int i = 0; i <= size - 1; i++) {
                         newsHeadLinesList.add(list.get(i));
                     }
+                    fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
+                    fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
                     newsAdapter.getScannedData(newsHeadLinesList, getActivity());
 
                 }
             });
-//            Call<com.example.countrynews.model.news.NewsResponse> call = BCRequests.getInstance().getBCRestService().callHeadlines(country, "business", null, api);
-//            call.enqueue(new Callback<com.example.countrynews.model.news.NewsResponse>() {
-//                @Override
-//                public void onResponse(Call<com.example.countrynews.model.news.NewsResponse> call, Response<com.example.countrynews.model.news.NewsResponse> response) {
-//                    if (response.isSuccessful()) {
-//                        Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
-////                        Log.e("==>", String.valueOf(response.body().getArticles().indexOf(modelArrayList)));
-//                        newsHeadLinesList = new ArrayList<>();
-//                        int size = response.body().getArticles().size();
-//                        response.body().getArticles().indexOf(call);
-//                        for (int i = 0; i <= size - 1; i++) {
-//                            newsHeadLinesList.add(response.body().getArticles().get(i));
-//                            fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-//                            fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-//                            customAdapter = new CustomAdapter(getActivity(), newsHeadLinesList);
-//                            fragmentNewsBinding.recyclerViewNews.setAdapter(customAdapter);
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<com.example.countrynews.model.news.NewsResponse> call, Throwable t) {
-//
-//                }
-//            });
-
-//            arrayList = new ArrayList<ArrayList<NewsResponse.Article>>();
-//            fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-//            fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-////            newsAdapter = new NewsAdapter();
-////            newsAdapter.getScannedData((ArrayList<NewsModel>) );
-//            Call<TestModel> testModelCall=BCRequests.getInstance().getBCRestService().getNews(country, api);
-//              testModelCall.enqueue(new Callback<TestModel>() {
-//                        @Override
-//                        public void onResponse(Call<TestModel> call, Response<TestModel> response) {
-//                            if (response.isSuccessful()){
-//                                modelArrayList = new ArrayList<>();
-//                                Log.e("Result==>",String.valueOf(response.body().getTotalResult()));
-////                                modelArrayList.addAll(response.body().getArrayList());
-////                                newsAdapter.notifyDataSetChanged();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<TestModel> call, Throwable t) {
-//                            Log.e("Result==>",t.getMessage());
-//
-//                        }
-//                    });
-
-
-//            fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-//            fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-//            customAdapter = new CustomAdapter(getActivity(), list);
-//            fragmentNewsBinding.recyclerViewNews.setAdapter(customAdapter);
-
-
+            loadCategory();
         } catch (Exception e) {
             Log.e("Error ==>", e.getMessage());
         }
+
+    }
+
+    private void loadCategory() {
+        try {
+            newsFragmentViewModel.getCategoryNews().observe(getViewLifecycleOwner(), new Observer<List<NewsHeadLines>>() {
+                @Override
+                public void onChanged(List<NewsHeadLines> list) {
+                    Log.e("=====> ", String.valueOf(list.get(0).getTitle()));
+                    int size = list.size();
+                    newsHeadLinesList.clear();
+                    for (int i = 0; i <= size - 1; i++) {
+                        newsHeadLinesList.add(list.get(i));
+                    }
+                    newsAdapter.getScannedData(newsHeadLinesList, getActivity());
+                    fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
+                    fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
+                    newsAdapter.notifyDataSetChanged();
+                }
+            });
+        } catch (Exception e) {
+            Log.e("Error ==>", e.getMessage());
+        }
+
 
     }
 
@@ -194,4 +163,11 @@ public class NewsFragment extends Fragment {
 //        fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
 ////        fragmentNewsBinding.recyclerViewNews.setLayoutManager(new GridLayoutManager());
 //    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        newsAdapter.getScannedData(newsHeadLinesList, getActivity());
+    }
 }
