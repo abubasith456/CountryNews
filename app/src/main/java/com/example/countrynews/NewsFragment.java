@@ -79,6 +79,7 @@ public class NewsFragment extends Fragment {
         fragmentNewsBinding.setLifecycleOwner(this);
         newsFragmentViewModel.getFragment(NewsFragment.this);
         fragmentNewsBinding.setNewsViewModel(newsFragmentViewModel);
+        newsFragmentViewModel.getBindView(fragmentNewsBinding);
         return fragmentNewsBinding.getRoot();
     }
 
@@ -86,8 +87,8 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try {
-
-//            loadCategory();
+            loadNewsData();
+            loadCategoryNewsData();
         } catch (Exception e) {
             Log.e("Error ==>", e.getMessage());
         }
@@ -97,8 +98,6 @@ public class NewsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadNewsData();
-        loadCategoryNewsData();
     }
 
     private void loadNewsData() {
@@ -107,6 +106,7 @@ public class NewsFragment extends Fragment {
                 @Override
                 public void onChanged(List<NewsHeadLines> list) {
                     Log.e("=====> ", String.valueOf(list));
+                    newsHeadLinesList.clear();
                     int size = list.size();
                     for (int i = 0; i <= size - 1; i++) {
                         newsHeadLinesList.add(list.get(i));

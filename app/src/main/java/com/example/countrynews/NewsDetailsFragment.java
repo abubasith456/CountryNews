@@ -41,12 +41,10 @@ public class NewsDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            newsDetailsViewModel.getNewsData(title,description,author,dateAndTime,urlToImage);
+
         } catch (Exception e) {
             Log.e("Error==>", e.getMessage());
         }
-
-
     }
 
     @Override
@@ -57,6 +55,7 @@ public class NewsDetailsFragment extends Fragment {
         fragmentNewsDetailsBinding.setDetailsModel(detailsModel);
         fragmentNewsDetailsBinding.setImageUrl(urlToImage);
         fragmentNewsDetailsBinding.setFragmentDetailsViewModel(newsDetailsViewModel);
+        newsDetailsViewModel.getNewsData(title,description,author,dateAndTime,urlToImage);
         newsDetailsViewModel.getUrl(url);
         return fragmentNewsDetailsBinding.getRoot();
     }

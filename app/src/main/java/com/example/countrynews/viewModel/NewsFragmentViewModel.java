@@ -17,6 +17,7 @@ import com.example.countrynews.LoginFragment;
 import com.example.countrynews.NewsFragment;
 import com.example.countrynews.OfflineNewsFragment;
 import com.example.countrynews.R;
+import com.example.countrynews.databinding.FragmentNewsBinding;
 import com.example.countrynews.model.Category;
 import com.example.countrynews.model.news.NewsResponse;
 import com.example.countrynews.model.news.NewsHeadLines;
@@ -42,6 +43,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
     public List<NewsHeadLines> newsHeadLinesList;
     private NewsFragment newsFragment;
     private FirebaseAuth auth;
+    private FragmentNewsBinding fragmentNewsBinding;
 
 
     public NewsFragmentViewModel(@NonNull Application application) {
@@ -56,6 +58,9 @@ public class NewsFragmentViewModel extends AndroidViewModel {
         this.newsFragment = newsFragment;
     }
 
+    public void getBindView(FragmentNewsBinding fragmentNewsBinding) {
+        this.fragmentNewsBinding = fragmentNewsBinding;
+    }
 //    public void getAdapterPosition(List<NewsHeadLines> newsHeadLines) {
 //        Toast.makeText(application.getApplicationContext(), "" + newsHeadLines.get(0), Toast.LENGTH_SHORT).show();
 //    }
@@ -103,12 +108,11 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                         public void onClick(DialogInterface dialog, int which) {
                             String selectedCategory = Category.selectCategory[which];
                             loadFilterItems(selectedCategory);
-//                            textViewCategoryName.setText(selectedCategory);
-//                        if (selectedCategory.equals("All")) {
-//                            loadAllItems();
-//                        } else {
-//
-//                        }
+                            if (selectedCategory.equals("general")) {
+                                fragmentNewsBinding.textViewSelectCategory.setText("Select Category");
+                            } else {
+                                fragmentNewsBinding.textViewSelectCategory.setText(selectedCategory);
+                            }
                         }
                     }).show();
         } catch (Exception exception) {

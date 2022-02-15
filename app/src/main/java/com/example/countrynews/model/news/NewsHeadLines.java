@@ -5,17 +5,18 @@ import android.widget.ImageView;
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
+import com.example.countrynews.R;
 
 public class NewsHeadLines {
 
-    Source source=null;
-    String author="";
-    String title="";
-    String description="";
-    String url="";
-    String urlToImage="";
+    Source source = null;
+    String author = "";
+    String title = "";
+    String description = "";
+    String url = "";
+    String urlToImage = "";
     String publishedAt;
-    String content="";
+    String content = "";
 
     public Source getSource() {
         return source;
@@ -83,9 +84,16 @@ public class NewsHeadLines {
 
     @BindingAdapter("newsImage")
     public static void loadImage(ImageView view, String imageUrl) {
-        Glide.with(view.getContext())
-                .load(imageUrl)
-                .into(view);
+        if (imageUrl != null) {
+            Glide.with(view.getContext())
+                    .load(imageUrl)
+                    .into(view);
+        } else {
+            Glide.with(view.getContext())
+                    .load(view.getResources().getDrawable(R.drawable.image_not_available))
+                    .into(view);
+        }
+
     }
 
 }
