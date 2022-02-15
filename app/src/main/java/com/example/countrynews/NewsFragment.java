@@ -32,16 +32,6 @@ public class NewsFragment extends Fragment {
 
     private FragmentNewsBinding fragmentNewsBinding;
     private NewsFragmentViewModel newsFragmentViewModel;
-    //    private static List<NewsHeadLines> list;
-//    private String api = "a49844b91eb748bb9d3458aa0794db69";
-//    public FragmentNewsBinding fragmentNewsBinding;
-//    private String country = "in";
-//    private String q = "bitcoin";
-////  ArrayList<ArrayList<NewsResponse.Article>> arrayList;
-//    ArrayList<NewsResponse.Article> newsResponse;
-//    ArrayList<NewsModel> modelArrayList;
-//    CustomAdapter customAdapter;
-    private NewsResponse newsHeadLines;
     private NewsAdapter newsAdapter;
     public List<NewsHeadLines> newsHeadLinesList;
     private FirebaseAuth auth;
@@ -58,8 +48,6 @@ public class NewsFragment extends Fragment {
         newsHeadLinesList = new ArrayList<>();
         newsAdapter = new NewsAdapter();
         auth = FirebaseAuth.getInstance();
-//        RequestManager manager = new RequestManager(getActivity());
-//        manager.getNewsHeadLines(listener, "general", null);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -106,34 +94,6 @@ public class NewsFragment extends Fragment {
         }
 
     }
-
-//    private void loadCategory() {
-//        try {
-//
-//        } catch (Exception e) {
-//            Log.e("Error ==>", e.getMessage());
-//        }
-//    }
-
-//    public static OnFetchDataListener<com.example.countrynews.model.news.NewsResponse> listener = new OnFetchDataListener<com.example.countrynews.model.news.NewsResponse>() {
-//        @Override
-//        public void onFetchData(List<NewsHeadLines> list, String message) {
-////          shoeNews(list);
-//            NewsFragment.list = list;
-//
-//        }
-//
-//        @Override
-//        public void onErrorMessage(String message) {
-//
-//        }
-//    };
-
-//    private static void shoeNews(List<NewsHeadLines> list) {
-//        fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-////        fragmentNewsBinding.recyclerViewNews.setLayoutManager(new GridLayoutManager());
-//    }
-
 
     @Override
     public void onResume() {
