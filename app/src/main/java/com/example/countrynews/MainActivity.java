@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
@@ -25,19 +26,25 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         activityMainBinding.setMainActivityViewModel(mainActivityViewModel);
-//        mainActivityViewModel.getBinding(activityMainBinding);
-        Utils.hideSoftKeyboard(this);
-        getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutContainer, new LoginFragment(), "Login")
-                .addToBackStack(null)
-                .commit();
+        mainActivityViewModel.getActivity(MainActivity.this);
+        checkExistUser();
+//        Utils.hideSoftKeyboard(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.more_menu, menu);
-        return true;
+    private void checkExistUser() {
+        try {
+            mainActivityViewModel.checkExistUser();
+        } catch (Exception e) {
+            Log.e("Error==> ", e.getMessage());
+        }
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.more_menu, menu);
+//        return true;
+//    }
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {

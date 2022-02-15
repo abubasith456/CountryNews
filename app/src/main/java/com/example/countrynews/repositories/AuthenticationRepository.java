@@ -1,6 +1,7 @@
 package com.example.countrynews.repositories;
 
 import android.app.Application;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.countrynews.LoginFragment;
+import com.example.countrynews.MainActivity;
 import com.example.countrynews.NewsFragment;
 import com.example.countrynews.R;
 import com.example.countrynews.databinding.ActivityMainBinding;
@@ -26,7 +29,6 @@ import java.util.HashMap;
 public class AuthenticationRepository {
     private Application application;
     private MutableLiveData<FirebaseUser> firebaseLoginUserMutableLiveData;
-    private MutableLiveData<Boolean> onShowIcon;
     private MutableLiveData<Boolean> userLoggedMutableLiveData;
     private FirebaseAuth auth;
     private FirebaseFirestore firebaseFirestore;
@@ -36,10 +38,6 @@ public class AuthenticationRepository {
 
     public MutableLiveData<FirebaseUser> getFirebaseLoginUserMutableLiveData() {
         return firebaseLoginUserMutableLiveData;
-    }
-
-    public MutableLiveData<Boolean> getOnShowIcon(){
-        return onShowIcon;
     }
 
     public MutableLiveData<Boolean> getUserLoggedMutableLiveData() {
@@ -70,7 +68,7 @@ public class AuthenticationRepository {
                     Fragment fragment = new NewsFragment();
                     FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-                    fragmentTransaction.addToBackStack("Login");
+                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     storeUserInputData(name, email);
                 } else {
@@ -79,7 +77,6 @@ public class AuthenticationRepository {
             }
         });
     }
-
 
     public void login(String email, String pass) {
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -130,6 +127,26 @@ public class AuthenticationRepository {
                 }
             }
         });
+    }
+
+    public void checkExistUser(MainActivity mainActivity) {
+        try {
+            if (auth.getCurrentUser() != null) {
+                Fragment fragment = new NewsFragment();
+                FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }else {
+                Fragment fragment = new LoginFragment();
+                FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        } catch (Exception e) {
+            Log.e("Error==>", e.getMessage());
+        }
     }
 
 //    public void signOut() {

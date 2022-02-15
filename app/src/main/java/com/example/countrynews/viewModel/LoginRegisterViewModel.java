@@ -45,7 +45,6 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public MutableLiveData<Boolean> onClickResult = new MutableLiveData<>();
     public MutableLiveData<Boolean> onClickRegister = new MutableLiveData<>();
     public MutableLiveData<Boolean> onClickForgotResult = new MutableLiveData<>();
-    public MutableLiveData<Boolean> onAppBariconVisible = new MutableLiveData<>();
     public ActivityMainBinding activityMainBinding;
     private AuthenticationRepository repository;
     private MutableLiveData<FirebaseUser> userLoginData;
@@ -58,19 +57,13 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public LoginRegisterViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
-        onAppBariconVisible.setValue(false);
         repository = new AuthenticationRepository(application);
         userLoginData = repository.getFirebaseLoginUserMutableLiveData();
-        onAppBariconVisible=repository.getOnShowIcon();
         //        loadUserDetails();
     }
 
     public MutableLiveData<FirebaseUser> getUserLoginData() {
         return userLoginData;
-    }
-
-    public MutableLiveData<Boolean> onShowIcon(){
-        return onAppBariconVisible;
     }
 
     public void getBinding(ActivityMainBinding activityMainBinding) {
@@ -161,6 +154,10 @@ public class LoginRegisterViewModel extends AndroidViewModel {
             if (Utils.isNetworkConnectionAvailable(activity)) {
                 if (validateRegister()) {
                     repository.register(EmailRegister.getValue(), PasswordRegister.getValue(), NameRegister.getValue());
+                    EmailRegister.setValue(null);
+                    PasswordRegister.setValue(null);
+                    NameRegister.setValue(null);
+                    ForgotPassword.setValue(null);
                 }
             } else {
                 Toast.makeText(application, "Please check the internet connection", Toast.LENGTH_SHORT).show();

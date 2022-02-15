@@ -11,4 +11,9 @@ public class Category {
             "technology",
             "general"
     };
+
+    public static final String[] selectSettings = {
+            "Offline news",
+            "Logout"
+    };
 }

@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.countrynews.LoginFragment;
 import com.example.countrynews.NewsFragment;
 import com.example.countrynews.OfflineNewsFragment;
 import com.example.countrynews.R;
@@ -20,6 +21,7 @@ import com.example.countrynews.model.Category;
 import com.example.countrynews.model.news.NewsResponse;
 import com.example.countrynews.model.news.NewsHeadLines;
 import com.example.countrynews.rest_client.BCRequests;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +40,13 @@ public class NewsFragmentViewModel extends AndroidViewModel {
     private MutableLiveData<List<NewsHeadLines>> categoryNews = new MutableLiveData<>();
     public List<NewsHeadLines> newsHeadLinesList;
     private NewsFragment newsFragment;
+    private FirebaseAuth auth;
 
 
     public NewsFragmentViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
+        auth=FirebaseAuth.getInstance();
         newsHeadLinesList = new ArrayList<>();
     }
 
@@ -55,35 +59,6 @@ public class NewsFragmentViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<List<NewsHeadLines>> getNewsHeadlines() {
-
-//        Call<NewsResponse> call = BCRequests.getInstance().getBCRestService().callHeadlines("us", "business", null, api);
-//        call.enqueue(new Callback<NewsResponse>() {
-//            @Override
-//            public void onResponse(Call<com.example.countrynews.model.news.NewsResponse> call, Response<NewsResponse> response) {
-//                if (response.isSuccessful()) {
-////                    Log.e("Total result ==>", String.valueOf(response.body().getArticles().get().getDescription()));
-////                        Log.e("==>", String.valueOf(response.body().getArticles().indexOf(modelArrayList)));
-////                    newsHeadlines = new ArrayList<>();
-//                    int size = response.body().getArticles().size();
-//                    response.body().getArticles().indexOf(call);
-//                    for (int i = 0; i <= size - 1; i++) {
-//                        newsHeadLinesList.add(response.body().getArticles().get(i));
-//                        responseMutableLiveData.postValue(response.body().getArticles().get(i));
-////                        fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-////                        fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-////                        customAdapter = new CustomAdapter(getActivity(), newsHeadLinesList);
-////                        fragmentNewsBinding.recyclerViewNews.setAdapter(customAdapter);
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<com.example.countrynews.model.news.NewsResponse> call, Throwable t) {
-//                Log.e("Error", t.getMessage());
-//            }
-//        });
-
         try {
             Call<NewsResponse> call = BCRequests.getInstance().getBCRestService().callHeadlines(country, category, null, api);
             call.enqueue(new Callback<NewsResponse>() {
@@ -178,16 +153,40 @@ public class NewsFragmentViewModel extends AndroidViewModel {
         }
     }
 
-    public void onOfflineNewsClick(View view) {
+    public void onSettingClick(View view) {
         try {
 
-            Fragment fragment = new OfflineNewsFragment();
-            FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-
+            AlertDialog.Builder builder = new AlertDialog.Builder(newsFragment.getActivity());
+            builder.setTitle("Select Category")
+                    .setItems(Category.selectSettings, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String selectedCategory = Category.selectSettings[which];
+                            loadSelectedItems(selectedCategory);
+                        }
+                    }).show();
         } catch (Exception exception) {
+            Log.e("Error ==> ", "" + exception);
+        }
+    }
+
+    private void loadSelectedItems(String selectedCategory) {
+        try {
+            if (selectedCategory=="Offline news"){
+                Fragment fragment = new OfflineNewsFragment();
+                FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }else if(selectedCategory=="Logout"){
+                auth.signOut();
+                Fragment fragment = new LoginFragment();
+                FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        }catch (Exception exception) {
             Log.e("Error ==> ", "" + exception);
         }
     }

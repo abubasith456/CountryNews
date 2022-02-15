@@ -13,11 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.countrynews.adapter.NewsAdapter;
 import com.example.countrynews.databinding.FragmentNewsBinding;
 import com.example.countrynews.model.news.NewsHeadLines;
 import com.example.countrynews.model.news.NewsResponse;
+import com.example.countrynews.utils.Utils;
 import com.example.countrynews.viewModel.NewsFragmentViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -72,7 +74,13 @@ public class NewsFragment extends Fragment {
 //            }
 //        };
 //        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        checkInternetConnection();
+    }
 
+    private void checkInternetConnection() {
+        if (!Utils.isNetworkConnectionAvailable(getActivity())) {
+            Toast.makeText(getActivity(), "Please check the internet connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -92,52 +100,21 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try {
-            newsFragmentViewModel.getNewsHeadlines().observe(getViewLifecycleOwner(), new Observer<List<NewsHeadLines>>() {
-                @Override
-                public void onChanged(List<NewsHeadLines> list) {
-                    Log.e("=====> ", String.valueOf(list));
-                    int size = list.size();
-                    for (int i = 0; i <= size - 1; i++) {
-                        newsHeadLinesList.add(list.get(i));
-                    }
-                    fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-                    fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
-                    newsAdapter.getNewsData(newsHeadLinesList, getActivity());
 
-                }
-            });
-            loadCategory();
+//            loadCategory();
         } catch (Exception e) {
             Log.e("Error ==>", e.getMessage());
         }
 
     }
 
-    private void loadCategory() {
-        try {
-            newsFragmentViewModel.getCategoryNews().observe(getViewLifecycleOwner(), new Observer<List<NewsHeadLines>>() {
-                @Override
-                public void onChanged(List<NewsHeadLines> list) {
-                    Log.e("=====> ", String.valueOf(list.get(0).getTitle()));
-                    int size = list.size();
-                    newsHeadLinesList.clear();
-                    for (int i = 0; i <= size - 1; i++) {
-                        newsHeadLinesList.add(list.get(i));
-                    }
-                    newsAdapter.getNewsData(newsHeadLinesList, getActivity());
-                    fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-                    fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
-                    newsAdapter.notifyDataSetChanged();
-                }
-            });
-        } catch (Exception e) {
-            Log.e("Error ==>", e.getMessage());
-        }
-
-
-    }
+//    private void loadCategory() {
+//        try {
+//
+//        } catch (Exception e) {
+//            Log.e("Error ==>", e.getMessage());
+//        }
+//    }
 
 //    public static OnFetchDataListener<com.example.countrynews.model.news.NewsResponse> listener = new OnFetchDataListener<com.example.countrynews.model.news.NewsResponse>() {
 //        @Override
@@ -162,6 +139,51 @@ public class NewsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        newsAdapter.getScannedData(newsHeadLinesList, getActivity());
+        loadNewsData();
+        loadCategoryNewsData();
+    }
+
+    private void loadNewsData() {
+        try {
+            newsFragmentViewModel.getNewsHeadlines().observe(getViewLifecycleOwner(), new Observer<List<NewsHeadLines>>() {
+                @Override
+                public void onChanged(List<NewsHeadLines> list) {
+                    Log.e("=====> ", String.valueOf(list));
+                    int size = list.size();
+                    for (int i = 0; i <= size - 1; i++) {
+                        newsHeadLinesList.add(list.get(i));
+                    }
+                    fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
+                    fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
+                    newsAdapter.getNewsData(newsHeadLinesList, getActivity());
+                }
+            });
+        } catch (Exception e) {
+            Log.e("Error ==>", e.getMessage());
+        }
+    }
+
+    private void loadCategoryNewsData() {
+        try {
+            newsFragmentViewModel.getCategoryNews().observe(getViewLifecycleOwner(), new Observer<List<NewsHeadLines>>() {
+                @Override
+                public void onChanged(List<NewsHeadLines> list) {
+                    Log.e("=====> ", String.valueOf(list.get(0).getTitle()));
+                    int size = list.size();
+                    newsHeadLinesList.clear();
+                    for (int i = 0; i <= size - 1; i++) {
+                        newsHeadLinesList.add(list.get(i));
+                    }
+                    newsAdapter.getNewsData(newsHeadLinesList, getActivity());
+                    fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
+                    fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
+                    newsAdapter.notifyDataSetChanged();
+                }
+            });
+        } catch (Exception e) {
+            Log.e("Error ==>", e.getMessage());
+        }
     }
 }
