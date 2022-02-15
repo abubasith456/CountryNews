@@ -1,7 +1,9 @@
 package com.example.countrynews;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -59,21 +61,18 @@ public class NewsFragment extends Fragment {
 //        RequestManager manager = new RequestManager(getActivity());
 //        manager.getNewsHeadLines(listener, "general", null);
 
-//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
-////                fragmentLoginBinding.layoutLoginPage.setVisibility(View.GONE);
-//                auth.signOut();
-//                Fragment loginFragment = new LoginFragment();
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frameLayoutContainer, loginFragment);
-////                transaction.addToBackStack(null);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         checkInternetConnection();
     }
 

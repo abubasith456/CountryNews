@@ -46,7 +46,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
     public NewsFragmentViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
-        auth=FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         newsHeadLinesList = new ArrayList<>();
     }
 
@@ -54,9 +54,9 @@ public class NewsFragmentViewModel extends AndroidViewModel {
         this.newsFragment = newsFragment;
     }
 
-    public void getAdapterPosition(List<NewsHeadLines> newsHeadLines) {
-        Toast.makeText(application.getApplicationContext(), "" + newsHeadLines.get(0), Toast.LENGTH_SHORT).show();
-    }
+//    public void getAdapterPosition(List<NewsHeadLines> newsHeadLines) {
+//        Toast.makeText(application.getApplicationContext(), "" + newsHeadLines.get(0), Toast.LENGTH_SHORT).show();
+//    }
 
     public MutableLiveData<List<NewsHeadLines>> getNewsHeadlines() {
         try {
@@ -66,17 +66,10 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                 public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
                     if (response.isSuccessful()) {
                         Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
-//                        Log.e("==>", String.valueOf(response.body().getArticles().indexOf(modelArrayList)));
-                        newsHeadLinesList = new ArrayList<>();
                         int size = response.body().getArticles().size();
                         response.body().getArticles().indexOf(call);
                         for (int i = 0; i <= size - 1; i++) {
-//                            newsHeadLinesList.add(response.body().getArticles().get(i));
                             newsHeadlines.postValue(response.body().getArticles());
-//                            fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-//                            fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-//                            customAdapter = new CustomAdapter(getActivity(), newsHeadLinesList);
-//                            fragmentNewsBinding.recyclerViewNews.setAdapter(customAdapter);
                         }
                     }
                 }
@@ -126,18 +119,10 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                 public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
                     if (response.isSuccessful()) {
                         Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
-//                        Log.e("==>", String.valueOf(response.body().getArticles().indexOf(modelArrayList)));
-//                        newsHeadLinesList.clear();
-//                        newsHeadLinesList = new ArrayList<>();
                         int size = response.body().getArticles().size();
                         response.body().getArticles().indexOf(call);
                         for (int i = 0; i <= size - 1; i++) {
-//                            newsHeadLinesList.add(response.body().getArticles().get(i));
                             categoryNews.postValue(response.body().getArticles());
-//                            fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
-//                            fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
-//                            customAdapter = new CustomAdapter(getActivity(), newsHeadLinesList);
-//                            fragmentNewsBinding.recyclerViewNews.setAdapter(customAdapter);
                         }
                     }
                 }
@@ -157,7 +142,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
         try {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(newsFragment.getActivity());
-            builder.setTitle("Select Category")
+            builder.setTitle("Settings")
                     .setItems(Category.selectSettings, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -172,13 +157,13 @@ public class NewsFragmentViewModel extends AndroidViewModel {
 
     private void loadSelectedItems(String selectedCategory) {
         try {
-            if (selectedCategory=="Offline news"){
+            if (selectedCategory == "Offline news") {
                 Fragment fragment = new OfflineNewsFragment();
                 FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-            }else if(selectedCategory=="Logout"){
+            } else if (selectedCategory == "Logout") {
                 auth.signOut();
                 Fragment fragment = new LoginFragment();
                 FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
@@ -186,7 +171,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
-        }catch (Exception exception) {
+        } catch (Exception exception) {
             Log.e("Error ==> ", "" + exception);
         }
     }
