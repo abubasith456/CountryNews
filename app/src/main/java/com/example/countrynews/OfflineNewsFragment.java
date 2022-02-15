@@ -45,6 +45,7 @@ public class OfflineNewsFragment extends Fragment {
         fragmentOfflineNewsBinding.setLifecycleOwner(this);
         offlineNewsViewModel.getFragment(OfflineNewsFragment.this);
         fragmentOfflineNewsBinding.setOfflineViewModel(offlineNewsViewModel);
+        offlineNewsAdapter.getFragment(OfflineNewsFragment.this);
         // Inflate the layout for this fragment
         return fragmentOfflineNewsBinding.getRoot();
     }
@@ -52,6 +53,28 @@ public class OfflineNewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        try {
+//            offlineNewsViewModel.getOfflineData().observe(getViewLifecycleOwner(), new Observer<List<News>>() {
+//                @Override
+//                public void onChanged(List<News> news) {
+//                    offlineNewsAdapter.getOfflineData(news);
+//                    fragmentOfflineNewsBinding.recyclerViewOfflineView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                    fragmentOfflineNewsBinding.recyclerViewOfflineView.setHasFixedSize(true);
+//                    fragmentOfflineNewsBinding.recyclerViewOfflineView.setAdapter(offlineNewsAdapter);
+//                }
+//            });
+        } catch (Exception e) {
+            Log.e("Error==> ", e.getMessage());
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadOfflineData();
+    }
+
+    private void loadOfflineData() {
         try {
             offlineNewsViewModel.getOfflineData().observe(getViewLifecycleOwner(), new Observer<List<News>>() {
                 @Override

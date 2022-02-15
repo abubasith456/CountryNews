@@ -13,7 +13,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.countrynews.db.AppDatabase;
 import com.example.countrynews.model.Category;
+import com.example.countrynews.model.offlineNews.News;
 
 public class NewsDetailsViewModel extends AndroidViewModel {
 
@@ -29,6 +31,20 @@ public class NewsDetailsViewModel extends AndroidViewModel {
         this.url = url;
     }
 
+    public void getNewsData(String title, String description, String author, String dateAndTime, String urlToImage) {
+        try {
+            AppDatabase db = AppDatabase.getDbInstance(this.getApplication());
+            News news = new News();
+            news.title = title;
+            news.description = description;
+            news.author = author;
+            news.date_and_time = dateAndTime;
+            news.image_url = urlToImage;
+            db.userDao().insertNewsData(news);
+        } catch (Exception e) {
+            Log.e("Error==>", e.getMessage());
+        }
+    }
 
     public void onUrlClicked(View view) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

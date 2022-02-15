@@ -41,15 +41,7 @@ public class NewsDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            AppDatabase db = AppDatabase.getDbInstance(this.getActivity());
-            News news = new News();
-            news.title = title;
-            news.description = description;
-            news.author = author;
-            news.date_and_time = dateAndTime;
-            news.image_url = urlToImage;
-            db.userDao().insertNewsData(news);
-
+            newsDetailsViewModel.getNewsData(title,description,author,dateAndTime,urlToImage);
         } catch (Exception e) {
             Log.e("Error==>", e.getMessage());
         }
