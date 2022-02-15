@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.countrynews.db.Entity.News;
+import com.example.countrynews.model.News;
 
 @Database(entities = {News.class}, version  = 1)
 public abstract class AppDatabase extends RoomDatabase {

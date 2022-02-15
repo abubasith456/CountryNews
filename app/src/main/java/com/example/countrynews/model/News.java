@@ -1,8 +1,13 @@
-package com.example.countrynews.db.Entity;
+package com.example.countrynews.model;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.bumptech.glide.Glide;
 
 @Entity
 public class News {
@@ -24,5 +29,12 @@ public class News {
 
     @ColumnInfo(name = "image_url")
     public String image_url;
+
+    @BindingAdapter("offlineImage")
+    public static void loadImage(ImageView view, String imageUrl) {
+        Glide.with(view.getContext())
+                .load(imageUrl)
+                .into(view);
+    }
 
 }

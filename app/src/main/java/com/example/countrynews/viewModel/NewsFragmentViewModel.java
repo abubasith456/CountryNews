@@ -8,10 +8,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.countrynews.NewsFragment;
+import com.example.countrynews.OfflineNewsFragment;
+import com.example.countrynews.R;
 import com.example.countrynews.model.Category;
 import com.example.countrynews.model.news.NewsResponse;
 import com.example.countrynews.model.news.NewsHeadLines;
@@ -172,6 +176,20 @@ public class NewsFragmentViewModel extends AndroidViewModel {
         } catch (Exception exception) {
             Log.e("Error ==> ", "" + exception);
         }
-
     }
+
+    public void onOfflineNewsClick(View view) {
+        try {
+
+            Fragment fragment = new OfflineNewsFragment();
+            FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+        } catch (Exception exception) {
+            Log.e("Error ==> ", "" + exception);
+        }
+    }
+
 }

@@ -2,11 +2,9 @@ package com.example.countrynews;
 
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,15 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.countrynews.adapter.CustomAdapter;
 import com.example.countrynews.adapter.NewsAdapter;
 import com.example.countrynews.databinding.FragmentNewsBinding;
-import com.example.countrynews.model.NewsModel;
 import com.example.countrynews.model.news.NewsHeadLines;
 import com.example.countrynews.model.news.NewsResponse;
-import com.example.countrynews.test.RequestManager;
 import com.example.countrynews.viewModel.NewsFragmentViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -109,7 +103,7 @@ public class NewsFragment extends Fragment {
                     fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
                     fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
                     fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
-                    newsAdapter.getScannedData(newsHeadLinesList, getActivity());
+                    newsAdapter.getNewsData(newsHeadLinesList, getActivity());
 
                 }
             });
@@ -131,7 +125,7 @@ public class NewsFragment extends Fragment {
                     for (int i = 0; i <= size - 1; i++) {
                         newsHeadLinesList.add(list.get(i));
                     }
-                    newsAdapter.getScannedData(newsHeadLinesList, getActivity());
+                    newsAdapter.getNewsData(newsHeadLinesList, getActivity());
                     fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
                     fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
                     fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);

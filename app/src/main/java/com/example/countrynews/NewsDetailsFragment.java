@@ -5,12 +5,15 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.countrynews.databinding.FragmentNewsBinding;
 import com.example.countrynews.databinding.FragmentNewsDetailsBinding;
+import com.example.countrynews.db.AppDatabase;
+import com.example.countrynews.model.News;
 import com.example.countrynews.model.DetailsModel;
 import com.example.countrynews.viewModel.NewsDetailsViewModel;
 
@@ -38,6 +41,20 @@ public class NewsDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            AppDatabase db = AppDatabase.getDbInstance(this.getActivity());
+            News news = new News();
+            news.title = title;
+            news.description = description;
+            news.author = author;
+            news.date_and_time = dateAndTime;
+            news.image_url = urlToImage;
+            db.userDao().insertNewsData(news);
+
+        } catch (Exception e) {
+            Log.e("Error==>", e.getMessage());
+        }
+
 
     }
 

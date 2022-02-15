@@ -54,7 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
         holder.listViewRowNewsBinding.executePendingBindings();
     }
 
-    public void getScannedData(List<NewsHeadLines> headLines, FragmentActivity activity) {
+    public void getNewsData(List<NewsHeadLines> headLines, FragmentActivity activity) {
         this.headLines = headLines;
         this.activity=activity;
         notifyDataSetChanged();

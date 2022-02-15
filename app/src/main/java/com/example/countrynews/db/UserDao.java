@@ -5,7 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.countrynews.db.Entity.News;
+import com.example.countrynews.model.News;
 
 import java.util.List;
 
@@ -13,10 +13,10 @@ import java.util.List;
 public interface UserDao {
 
     @Query("SELECT * FROM news")
-    List<News> getAllUsers();
+    List<News> getAllNewsData();
 
     @Insert
-    void insertUser(News... news);
+    void insertNewsData(News... news);
 
     @Delete
     void delete(News news);

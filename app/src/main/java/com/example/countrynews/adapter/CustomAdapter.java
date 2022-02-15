@@ -30,7 +30,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     @NonNull
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CustomViewHolder(LayoutInflater.from(activity).inflate(R.layout.list_view_news, parent, false));
+        return new CustomViewHolder(LayoutInflater.from(activity).inflate(R.layout.list_view_offline_news, parent, false));
     }
 
     @Override
