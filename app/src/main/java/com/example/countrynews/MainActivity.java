@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.setMainActivityViewModel(mainActivityViewModel);
         mainActivityViewModel.getActivity(MainActivity.this);
         checkExistUser();
-//        Utils.hideSoftKeyboard(this);
     }
 
     private void checkExistUser() {
