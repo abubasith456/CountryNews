@@ -77,44 +77,38 @@ public class LoginRegisterViewModel extends AndroidViewModel {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayoutContainer, registerFragmentFragment);
         transaction.addToBackStack(null);
-//      transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    public MutableLiveData<Boolean> onclickHide(View view) {
-        EmailRegisterError.setValue(null);
-        PasswordRegisterError.setValue(null);
-        NameRegisterError.setValue(null);
-        ForgotError.setValue(null);
-
-        EmailRegister.setValue(null);
-        PasswordRegister.setValue(null);
-        NameRegister.setValue(null);
-        ForgotPassword.setValue(null);
-
-        onClickResult.setValue(false);
-        onClickRegister.setValue(false);
-        onClickForgotResult.setValue(false);
-        return onClickResult;
-    }
+//    public MutableLiveData<Boolean> onclickHide(View view) {
+//        EmailRegisterError.setValue(null);
+//        PasswordRegisterError.setValue(null);
+//        NameRegisterError.setValue(null);
+//        ForgotError.setValue(null);
+//
+//        EmailRegister.setValue(null);
+//        PasswordRegister.setValue(null);
+//        NameRegister.setValue(null);
+//        ForgotPassword.setValue(null);
+//
+//        onClickResult.setValue(false);
+//        onClickRegister.setValue(false);
+//        onClickForgotResult.setValue(false);
+//        return onClickResult;
+//    }
 
     public void getFragment(FragmentActivity loginFragment) {
-//        this.loginFragment = loginFragment;
         this.activity = loginFragment;
         repository.getFragment(loginFragment);
     }
 
-    public MutableLiveData<Boolean> onClickShow(View view) {
+//    public MutableLiveData<Boolean> onClickShow(View view) {
 //        EmailError.setValue(null);
 //        PasswordError.setValue(null);
-//
-//
 //        onClickResult.setValue(true);
 //        onClickRegister.setValue(true);
-
-
-        return onClickResult;
-    }
+//        return onClickResult;
+//    }
 
 
     public MutableLiveData<Boolean> onForgotPasswordClick(View view) {
@@ -125,11 +119,6 @@ public class LoginRegisterViewModel extends AndroidViewModel {
         onClickForgotResult.setValue(true);
         return onClickResult;
     }
-
-//    public void getBinding(ActivityLoginBinding activityLoginBinding) {
-//        this.activityLoginBinding = activityLoginBinding;
-//    }
-
 
     public void onLoginClick(View view) {
         try {
