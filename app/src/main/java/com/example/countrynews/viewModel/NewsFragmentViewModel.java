@@ -38,6 +38,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
     private MutableLiveData<NewsHeadLines> responseMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<NewsHeadLines>> newsHeadlines = new MutableLiveData<>();
     private MutableLiveData<List<NewsHeadLines>> categoryNews = new MutableLiveData<>();
+    public MutableLiveData<Boolean> processBar = new MutableLiveData<>();
     public List<NewsHeadLines> newsHeadLinesList;
     private NewsFragment newsFragment;
     private FirebaseAuth auth;
@@ -48,6 +49,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
         this.application = application;
         auth = FirebaseAuth.getInstance();
         newsHeadLinesList = new ArrayList<>();
+        processBar.setValue(true);
     }
 
     public void getFragment(NewsFragment newsFragment) {
@@ -65,6 +67,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                 @Override
                 public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
                     if (response.isSuccessful()) {
+                        processBar.setValue(false);
                         Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
                         int size = response.body().getArticles().size();
                         response.body().getArticles().indexOf(call);
@@ -76,11 +79,13 @@ public class NewsFragmentViewModel extends AndroidViewModel {
 
                 @Override
                 public void onFailure(Call<NewsResponse> call, Throwable t) {
-
+                    processBar.setValue(false);
+                    Toast.makeText(application.getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception exception) {
-            Log.e("Erroe Call ==>", exception.getMessage());
+            processBar.setValue(false);
+            Log.e("Error Call ==>", exception.getMessage());
         }
         return newsHeadlines;
     }
@@ -118,6 +123,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                 @Override
                 public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
                     if (response.isSuccessful()) {
+                        processBar.setValue(false);
                         Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
                         int size = response.body().getArticles().size();
                         response.body().getArticles().indexOf(call);
@@ -129,11 +135,13 @@ public class NewsFragmentViewModel extends AndroidViewModel {
 
                 @Override
                 public void onFailure(Call<NewsResponse> call, Throwable t) {
-
+                    processBar.setValue(false);
+                    Toast.makeText(application.getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 
         } catch (Exception exception) {
+            processBar.setValue(false);
             Log.e("Error ==> ", "" + exception);
         }
     }

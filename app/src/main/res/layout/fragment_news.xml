@@ -9,6 +9,10 @@
             name="newsViewModel"
             type="com.example.countrynews.viewModel.NewsFragmentViewModel" />
 
+        <variable
+            name="view"
+            type="android.view.View" />
+
     </data>
 
 
@@ -90,6 +94,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:listitem="@layout/list_view_row_news" />
 
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/shade_black"
+            android:visibility="@{newsViewModel.processBar?view.VISIBLE:view.GONE}">
+
+            <ProgressBar
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_gravity="center"
+                android:indeterminateDrawable="@drawable/background_custom_progress_bar"
+                android:visibility="visible" />
 
         </FrameLayout>
 
