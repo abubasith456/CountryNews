@@ -83,7 +83,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
                     transaction.replace(R.id.frameLayoutContainer, intentFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-
                 }
             });
         }
