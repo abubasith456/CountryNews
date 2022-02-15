@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="newsHeadlines"
-            type="com.example.countrynews.model.news.NewsResponse" />
-
-        <variable
             name="newsViewModel"
             type="com.example.countrynews.viewModel.NewsFragmentViewModel" />
 

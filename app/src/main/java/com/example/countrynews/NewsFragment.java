@@ -36,11 +36,9 @@ public class NewsFragment extends Fragment {
     public List<NewsHeadLines> newsHeadLinesList;
     private FirebaseAuth auth;
 
-
     public NewsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +46,8 @@ public class NewsFragment extends Fragment {
         newsHeadLinesList = new ArrayList<>();
         newsAdapter = new NewsAdapter();
         auth = FirebaseAuth.getInstance();
+//        RequestManager manager = new RequestManager(getActivity());
+//        manager.getNewsHeadLines(listener, "general", null);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -76,7 +76,6 @@ public class NewsFragment extends Fragment {
         // Inflate the layout for this fragment
         newsFragmentViewModel = new ViewModelProvider(requireActivity()).get(NewsFragmentViewModel.class);
         fragmentNewsBinding = FragmentNewsBinding.inflate(getLayoutInflater());
-        fragmentNewsBinding.setNewsHeadlines(newsHeadLines);
         fragmentNewsBinding.setLifecycleOwner(this);
         newsFragmentViewModel.getFragment(NewsFragment.this);
         fragmentNewsBinding.setNewsViewModel(newsFragmentViewModel);
