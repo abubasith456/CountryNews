@@ -102,7 +102,11 @@ public class AuthenticationRepository {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(application.getApplicationContext(), "Link sent to your email", Toast.LENGTH_SHORT).show();
-
+                    Fragment fragment = new LoginFragment();
+                    FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                 } else {
                     Toast.makeText(application.getApplicationContext(), "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
                 }

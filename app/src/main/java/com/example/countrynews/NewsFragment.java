@@ -98,15 +98,16 @@ public class NewsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
     private void loadNewsData() {
         try {
+            newsHeadLinesList.clear();
             newsFragmentViewModel.getNewsHeadlines().observe(getViewLifecycleOwner(), new Observer<List<NewsHeadLines>>() {
                 @Override
                 public void onChanged(List<NewsHeadLines> list) {
                     Log.e("=====> ", String.valueOf(list));
-                    newsHeadLinesList.clear();
                     int size = list.size();
                     for (int i = 0; i <= size - 1; i++) {
                         newsHeadLinesList.add(list.get(i));
@@ -128,8 +129,8 @@ public class NewsFragment extends Fragment {
                 @Override
                 public void onChanged(List<NewsHeadLines> list) {
                     Log.e("=====> ", String.valueOf(list.get(0).getTitle()));
-                    int size = list.size();
                     newsHeadLinesList.clear();
+                    int size = list.size();
                     for (int i = 0; i <= size - 1; i++) {
                         newsHeadLinesList.add(list.get(i));
                     }
@@ -137,7 +138,6 @@ public class NewsFragment extends Fragment {
                     fragmentNewsBinding.recyclerViewNews.setLayoutManager(new LinearLayoutManager(getActivity()));
                     fragmentNewsBinding.recyclerViewNews.setHasFixedSize(true);
                     fragmentNewsBinding.recyclerViewNews.setAdapter(newsAdapter);
-                    newsAdapter.notifyDataSetChanged();
                 }
             });
         } catch (Exception e) {

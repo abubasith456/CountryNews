@@ -56,11 +56,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        fragmentLoginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
-////        fragmentLoginBinding.setLoginRegisterViewModel(loginRegisterViewModel);
-//        View view=fragmentLoginBinding.getRoot();
-//        return inflater.inflate(R.layout.fragment_register, container, false);
-//        Utils.hideSoftKeyboard(getActivity());
         FirebaseApp.initializeApp(getActivity());
         loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
         fragmentLoginBinding = FragmentLoginBinding.inflate(getLayoutInflater());

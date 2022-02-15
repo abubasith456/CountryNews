@@ -19,6 +19,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 
+import com.example.countrynews.ForgotPasswordFragment;
 import com.example.countrynews.LoginFragment;
 import com.example.countrynews.NewsFragment;
 import com.example.countrynews.R;
@@ -80,6 +81,15 @@ public class LoginRegisterViewModel extends AndroidViewModel {
         transaction.commit();
     }
 
+    public void onForgotPasswordClick(View view) {
+        Utils.hideSoftKeyboard(activity);
+        Fragment registerFragmentFragment = new ForgotPasswordFragment();
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutContainer, registerFragmentFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 //    public MutableLiveData<Boolean> onclickHide(View view) {
 //        EmailRegisterError.setValue(null);
 //        PasswordRegisterError.setValue(null);
@@ -110,15 +120,14 @@ public class LoginRegisterViewModel extends AndroidViewModel {
 //        return onClickResult;
 //    }
 
-
-    public MutableLiveData<Boolean> onForgotPasswordClick(View view) {
-        EmailError.setValue(null);
-        PasswordError.setValue(null);
-        onClickResult.setValue(true);
-        onClickRegister.setValue(false);
-        onClickForgotResult.setValue(true);
-        return onClickResult;
-    }
+//    public MutableLiveData<Boolean> onForgotPasswordClick(View view) {
+//        EmailError.setValue(null);
+//        PasswordError.setValue(null);
+//        onClickResult.setValue(true);
+//        onClickRegister.setValue(false);
+//        onClickForgotResult.setValue(true);
+//        return onClickResult;
+//    }
 
     public void onLoginClick(View view) {
         try {
@@ -160,8 +169,14 @@ public class LoginRegisterViewModel extends AndroidViewModel {
 
     public void onForgotClick(View view) {
         try {
+            Utils.hideSoftKeyboard(activity);
             if (validateForgot()) {
-                repository.forgot(ForgotPassword.getValue());
+                if (Utils.isNetworkConnectionAvailable(activity)) {
+                    repository.forgot(ForgotPassword.getValue());
+                    ForgotPassword.setValue(null);
+                } else {
+                    Toast.makeText(application, "Please check the internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
         } catch (Exception exception) {
             Log.e("Error forgot==> ", "" + exception);
@@ -220,6 +235,7 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     }
 
     public boolean validateForgot() {
+        ForgotError.setValue(null);
         boolean valid = true;
         try {
             if (ForgotPassword.getValue() == null || ForgotPassword.getValue().isEmpty()) {

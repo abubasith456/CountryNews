@@ -73,6 +73,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                 public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
                     if (response.isSuccessful()) {
                         processBar.setValue(false);
+//                        newsHeadLinesList.clear();
                         Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
                         int size = response.body().getArticles().size();
                         response.body().getArticles().indexOf(call);
@@ -108,11 +109,6 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                         public void onClick(DialogInterface dialog, int which) {
                             String selectedCategory = Category.selectCategory[which];
                             loadFilterItems(selectedCategory);
-                            if (selectedCategory.equals("general")) {
-                                fragmentNewsBinding.textViewSelectCategory.setText("Select Category");
-                            } else {
-                                fragmentNewsBinding.textViewSelectCategory.setText(selectedCategory);
-                            }
                         }
                     }).show();
         } catch (Exception exception) {

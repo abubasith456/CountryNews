@@ -8,6 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.bumptech.glide.Glide;
+import com.example.countrynews.R;
 
 @Entity
 public class News {
@@ -32,9 +33,15 @@ public class News {
 
     @BindingAdapter("offlineImage")
     public static void loadImage(ImageView view, String imageUrl) {
-        Glide.with(view.getContext())
-                .load(imageUrl)
-                .into(view);
+        if (imageUrl != null) {
+            Glide.with(view.getContext())
+                    .load(imageUrl)
+                    .into(view);
+        } else {
+            Glide.with(view.getContext())
+                    .load(view.getResources().getDrawable(R.drawable.image_not_available))
+                    .into(view);
+        }
     }
 
 }

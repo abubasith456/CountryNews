@@ -34,7 +34,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
-                android:fontFamily="@font/work_sans_medium"
+                android:fontFamily="@font/work_sans_bold"
                 android:text="Login"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_20sdp" />
