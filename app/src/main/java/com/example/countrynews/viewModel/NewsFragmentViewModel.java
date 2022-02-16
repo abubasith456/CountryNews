@@ -75,11 +75,8 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                         processBar.setValue(false);
 //                        newsHeadLinesList.clear();
                         Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
-                        int size = response.body().getArticles().size();
                         response.body().getArticles().indexOf(call);
-                        for (int i = 0; i <= size - 1; i++) {
-                            newsHeadlines.postValue(response.body().getArticles());
-                        }
+                        newsHeadlines.postValue(response.body().getArticles());
                     }
                 }
 
@@ -125,11 +122,8 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                     if (response.isSuccessful()) {
                         processBar.setValue(false);
                         Log.e("Total result ==>", String.valueOf(response.body().getArticles().get(0).getDescription()));
-                        int size = response.body().getArticles().size();
                         response.body().getArticles().indexOf(call);
-                        for (int i = 0; i <= size - 1; i++) {
-                            categoryNews.postValue(response.body().getArticles());
-                        }
+                        categoryNews.postValue(response.body().getArticles());
                     }
                 }
 

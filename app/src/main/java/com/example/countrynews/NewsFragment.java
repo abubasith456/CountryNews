@@ -119,7 +119,7 @@ public class NewsFragment extends Fragment {
             newsFragmentViewModel.getCategoryNews().observe(getViewLifecycleOwner(), new Observer<List<NewsHeadLines>>() {
                 @Override
                 public void onChanged(List<NewsHeadLines> list) {
-                    Log.e("=====> ", String.valueOf(list.get(0).getTitle()));
+                    Log.e("=====> ", String.valueOf(list));
                     newsHeadLinesList.clear();
                     int size = list.size();
                     for (int i = 0; i <= size - 1; i++) {
