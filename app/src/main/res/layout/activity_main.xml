@@ -32,25 +32,6 @@
             android:padding="@dimen/_2sdp"
             android:visibility="@{mainActivityViewModel.onAppBarVisible?view.VISIBLE:view.GONE}">
 
-            <!--            <LinearLayout-->
-            <!--                android:id="@+id/linear_layout_menu"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="match_parent"-->
-            <!--                android:onClick="@{(v)->dashboardViewModel.onMenuOpenClick(v)}"-->
-            <!--                android:paddingStart="@dimen/_10sdp"-->
-            <!--                android:paddingEnd="@dimen/_10sdp">-->
-
-            <!--                <androidx.appcompat.widget.AppCompatImageView-->
-            <!--                    android:id="@+id/appCompatImageView"-->
-            <!--                    android:layout_width="@dimen/_25sdp"-->
-            <!--                    android:layout_height="@dimen/_25sdp"-->
-            <!--                    android:layout_gravity="center"-->
-            <!--                    android:gravity="start"-->
-            <!--                    android:src="@drawable/icon_menu"-->
-            <!--                    android:tint="@color/colorPrimaryDark"-->
-            <!--                    app:tint="@color/colorWhite" />-->
-            <!--            </LinearLayout>-->
-
             <TextView
                 android:id="@+id/textViewTitle"
                 android:layout_width="wrap_content"
@@ -72,11 +53,6 @@
                 android:paddingStart="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_5sdp">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="@dimen/_30sdp"-->
-<!--                    android:layout_height="@dimen/_30sdp"-->
-<!--                    android:background="@drawable/icon_category"-->
-<!--                    android:visibility="@{loginViewModel.onAppBariconVisible?view.VISIBLE:view.GONE}" />-->
 
 
             </LinearLayout>
@@ -87,6 +63,8 @@
             android:id="@+id/frameLayoutContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
+            <!-- Fragment container -->
 
         </FrameLayout>
 

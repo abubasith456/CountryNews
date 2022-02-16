@@ -48,9 +48,6 @@ public class NewsFragment extends Fragment {
         newsHeadLinesList = new ArrayList<>();
         newsAdapter = new NewsAdapter();
         auth = FirebaseAuth.getInstance();
-//        RequestManager manager = new RequestManager(getActivity());
-//        manager.getNewsHeadLines(listener, "general", null);
-
 //        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
 //            @Override
 //            public void handleOnBackPressed() {
@@ -64,12 +61,6 @@ public class NewsFragment extends Fragment {
 //        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 //        checkInternetConnection();
     }
-
-//    private void checkInternetConnection() {
-//        if (!Utils.isNetworkConnectionAvailable(getActivity())) {
-//            Toast.makeText(getActivity(), "Please check the internet connection", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

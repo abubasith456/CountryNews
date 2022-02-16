@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.widget.Toast;
 
 import com.example.countrynews.NewsFragment;
+import com.example.countrynews.utils.Utils;
 import com.example.countrynews.viewModel.NewsFragmentViewModel;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
@@ -22,8 +23,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     }
 
     public boolean isOnline(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
-        return (netInfo != null && netInfo.isConnected());
+        if (Utils.isNetworkConnectionAvailable(context)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
