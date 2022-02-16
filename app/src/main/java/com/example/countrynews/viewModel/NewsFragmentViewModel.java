@@ -176,7 +176,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
                 Fragment fragment = new LoginFragment();
                 FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         } catch (Exception exception) {

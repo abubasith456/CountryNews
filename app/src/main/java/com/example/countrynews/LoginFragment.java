@@ -39,18 +39,6 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_HOME);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-
     }
 
     @Override

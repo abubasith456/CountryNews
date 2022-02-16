@@ -49,18 +49,17 @@ public class NewsFragment extends Fragment {
 //        RequestManager manager = new RequestManager(getActivity());
 //        manager.getNewsHeadLines(listener, "general", null);
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_HOME);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(Intent.ACTION_MAIN);
+//                intent.addCategory(Intent.CATEGORY_HOME);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         checkInternetConnection();
     }
 
@@ -98,7 +97,6 @@ public class NewsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     private void loadNewsData() {

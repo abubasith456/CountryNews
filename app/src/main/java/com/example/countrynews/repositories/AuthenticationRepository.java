@@ -68,7 +68,7 @@ public class AuthenticationRepository {
                     Fragment fragment = new NewsFragment();
                     FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-                    fragmentTransaction.addToBackStack(null);
+//                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     storeUserInputData(name, email);
                 } else {
@@ -86,7 +86,7 @@ public class AuthenticationRepository {
                     Fragment fragment = new NewsFragment();
                     FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-                    fragmentTransaction.addToBackStack(null);
+//                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     firebaseLoginUserMutableLiveData.postValue(auth.getCurrentUser());
                 } else {
@@ -139,13 +139,13 @@ public class AuthenticationRepository {
                 Fragment fragment = new NewsFragment();
                 FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }else {
                 Fragment fragment = new LoginFragment();
                 FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         } catch (Exception e) {
