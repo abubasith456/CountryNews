@@ -1,6 +1,7 @@
 package com.example.countrynews;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.countrynews.adapter.NewsAdapter;
+import com.example.countrynews.broadcast.MyBroadcastReceiver;
 import com.example.countrynews.databinding.FragmentNewsBinding;
 import com.example.countrynews.model.news.NewsHeadLines;
 import com.example.countrynews.model.news.NewsResponse;
@@ -60,14 +62,14 @@ public class NewsFragment extends Fragment {
 //            }
 //        };
 //        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-        checkInternetConnection();
+//        checkInternetConnection();
     }
 
-    private void checkInternetConnection() {
-        if (!Utils.isNetworkConnectionAvailable(getActivity())) {
-            Toast.makeText(getActivity(), "Please check the internet connection", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    private void checkInternetConnection() {
+//        if (!Utils.isNetworkConnectionAvailable(getActivity())) {
+//            Toast.makeText(getActivity(), "Please check the internet connection", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,7 +101,7 @@ public class NewsFragment extends Fragment {
         super.onResume();
     }
 
-    private void loadNewsData() {
+    public void loadNewsData() {
         try {
             newsHeadLinesList.clear();
             newsFragmentViewModel.getNewsHeadlines().observe(getViewLifecycleOwner(), new Observer<List<NewsHeadLines>>() {

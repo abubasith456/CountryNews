@@ -19,23 +19,23 @@ import com.example.countrynews.viewModel.NewsDetailsViewModel;
 
 public class NewsDetailsFragment extends Fragment {
 
-    private String title, description, author, dateAndTime, urlToImage, url;
+    private String title, description, author, dateAndTime, urlToImage, url, content;
     private FragmentNewsDetailsBinding fragmentNewsDetailsBinding;
     private NewsDetailsViewModel newsDetailsViewModel;
     private DetailsModel detailsModel;
 
-    public NewsDetailsFragment(String title, String description, String author, String dateAndTime, String urlToImage, String url) {
+    public NewsDetailsFragment(String title, String description, String author, String dateAndTime, String urlToImage, String url, String content) {
         this.title = title;
         this.description = description;
         this.author = author;
         this.dateAndTime = dateAndTime;
         this.urlToImage = urlToImage;
         this.url = url;
+        this.content = content;
 
-        detailsModel = new DetailsModel(title, description, author, dateAndTime, urlToImage, url);
+        detailsModel = new DetailsModel(title, description, author, dateAndTime, urlToImage, url, content);
 
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class NewsDetailsFragment extends Fragment {
         fragmentNewsDetailsBinding.setDetailsModel(detailsModel);
         fragmentNewsDetailsBinding.setImageUrl(urlToImage);
         fragmentNewsDetailsBinding.setFragmentDetailsViewModel(newsDetailsViewModel);
-        newsDetailsViewModel.getNewsData(title,description,author,dateAndTime,urlToImage);
+        newsDetailsViewModel.getNewsData(title, description, author, dateAndTime, urlToImage);
         newsDetailsViewModel.getUrl(url);
         return fragmentNewsDetailsBinding.getRoot();
     }

@@ -19,7 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/purple_200"
+        android:background="@color/colorWhite"
         tools:context=".NewsFragment">
 
         <!--        <LinearLayout-->
@@ -40,89 +40,169 @@
         <!--            app:layout_constraintEnd_toEndOf="parent"-->
         <!--            app:layout_constraintStart_toStartOf="parent"-->
         <!--            app:layout_constraintTop_toTopOf="parent">-->
-
-
-        <TextView
-            android:id="@+id/textViewSelectCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="26dp"
-            android:fontFamily="@font/work_sans_medium"
-            android:onClick="@{(v)->newsViewModel.onCategoryClick(v)}"
-            android:text="Select category"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:layout_marginTop="26dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/icon_category"
-            app:layout_constraintEnd_toStartOf="@+id/viewDivide"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <View
-            android:id="@+id/viewDivide"
-            android:layout_width="@dimen/_1sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:background="#DBDBDB"
-            app:layout_constraintBottom_toTopOf="@id/view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:fontFamily="@font/work_sans_medium"
-            android:onClick="@{(v)->newsViewModel.onSettingClick(v)}"
-            android:text="Settings"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintEnd_toStartOf="@+id/imageViewOffline"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/viewDivide"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageViewOffline"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:layout_marginTop="26dp"
-            android:layout_marginEnd="60dp"
-            android:background="@drawable/icon_settings"
-            android:backgroundTint="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/view"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:background="#DBDBDB"
-            app:layout_constraintBottom_toTopOf="@id/frameLayoutRecyclerView"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/purple_200"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSelectCategory"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/textViewTitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{(v)->newsViewModel.onCategoryClick(v)}"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp">
+
+
+                <TextView
+                    android:id="@+id/textViewSelectCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/work_sans_medium"
+                    android:text="Select category"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_12sdp" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:background="@drawable/icon_category" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewDivide"
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="match_parent"
+                android:background="#DBDBDB"
+                app:layout_constraintBottom_toTopOf="@id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <LinearLayout
+                android:id="@+id/linear_layout_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{(v)->newsViewModel.onSettingClick(v)}"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/work_sans_medium"
+                    android:text="Settings"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_12sdp" />
+
+                <ImageView
+                    android:id="@+id/imageViewOffline"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:background="@drawable/icon_settings"
+                    android:backgroundTint="@color/colorWhite" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/textViewSelectCategory"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="10dp"-->
+        <!--            android:layout_marginTop="26dp"-->
+        <!--            android:fontFamily="@font/work_sans_medium"-->
+        <!--            android:onClick="@{(v)->newsViewModel.onCategoryClick(v)}"-->
+        <!--            android:text="Select category"-->
+        <!--            android:textColor="@color/colorWhite"-->
+        <!--            android:textSize="@dimen/_12sdp"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/imageView2"-->
+        <!--            app:layout_constraintHorizontal_bias="1.0"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imageView2"-->
+        <!--            android:layout_width="@dimen/_15sdp"-->
+        <!--            android:layout_height="@dimen/_15sdp"-->
+        <!--            android:layout_marginTop="26dp"-->
+        <!--            android:layout_marginEnd="40dp"-->
+        <!--            android:background="@drawable/icon_category"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/viewDivide"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+
+        <!--        <View-->
+        <!--            android:id="@+id/viewDivide"-->
+        <!--            android:layout_width="@dimen/_1sdp"-->
+        <!--            android:layout_height="@dimen/_50sdp"-->
+        <!--            android:background="#DBDBDB"-->
+        <!--            app:layout_constraintBottom_toTopOf="@id/view"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            tools:ignore="MissingConstraints"-->
+        <!--            tools:layout_editor_absoluteY="0dp" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="26dp"-->
+        <!--            android:fontFamily="@font/work_sans_medium"-->
+        <!--            android:onClick="@{(v)->newsViewModel.onSettingClick(v)}"-->
+        <!--            android:text="Settings"-->
+        <!--            android:textColor="@color/colorWhite"-->
+        <!--            android:textSize="@dimen/_12sdp"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/imageViewOffline"-->
+        <!--            app:layout_constraintHorizontal_bias="1.0"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/viewDivide"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imageViewOffline"-->
+        <!--            android:layout_width="@dimen/_15sdp"-->
+        <!--            android:layout_height="@dimen/_15sdp"-->
+        <!--            android:layout_marginTop="26dp"-->
+        <!--            android:layout_marginEnd="60dp"-->
+        <!--            android:background="@drawable/icon_settings"-->
+        <!--            android:backgroundTint="@color/colorWhite"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--        <View-->
+        <!--            android:id="@+id/view"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="@dimen/_1sdp"-->
+        <!--            android:layout_marginTop="@dimen/_14sdp"-->
+        <!--            android:background="#DBDBDB"-->
+        <!--            app:layout_constraintBottom_toTopOf="@id/frameLayoutRecyclerView"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.0"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/textViewSelectCategory"-->
+        <!--            tools:ignore="MissingConstraints" />-->
 
         <FrameLayout
             android:id="@+id/frameLayoutRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_49sdp">
+            android:layout_marginTop="@dimen/_40sdp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewNews"
@@ -142,6 +222,7 @@
             android:layout_height="match_parent"
             android:background="@color/shade_black"
             android:visibility="@{newsViewModel.processBar?view.VISIBLE:view.GONE}">
+
 
             <ProgressBar
                 android:layout_width="@dimen/_80sdp"

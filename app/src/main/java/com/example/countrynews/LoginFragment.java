@@ -1,6 +1,7 @@
 package com.example.countrynews;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.countrynews.broadcast.MyBroadcastReceiver;
 import com.example.countrynews.databinding.FragmentLoginBinding;
 import com.example.countrynews.utils.Utils;
 import com.example.countrynews.viewModel.LoginRegisterViewModel;
@@ -38,7 +40,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//
     }
 
     @Override

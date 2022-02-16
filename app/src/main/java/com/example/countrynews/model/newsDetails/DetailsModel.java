@@ -9,15 +9,16 @@ import com.example.countrynews.R;
 
 public class DetailsModel {
 
-    String title, description, author, dateAndTime, urlToImage, url;
+    String title, description, author, dateAndTime, urlToImage, url, content;
 
-    public DetailsModel(String title, String description, String author, String dateAndTime, String urlToImage, String url) {
+    public DetailsModel(String title, String description, String author, String dateAndTime, String urlToImage, String url, String content) {
         this.title = title;
         this.description = description;
         this.author = author;
         this.dateAndTime = dateAndTime;
         this.urlToImage = urlToImage;
         this.url = url;
+        this.content = content;
     }
 
     public String getTitle() {
@@ -66,6 +67,14 @@ public class DetailsModel {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @BindingAdapter("detailImage")

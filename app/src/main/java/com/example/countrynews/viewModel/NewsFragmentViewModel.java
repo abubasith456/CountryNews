@@ -168,7 +168,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
             if (selectedCategory == "Offline news") {
                 Fragment fragment = new OfflineNewsFragment();
                 FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+                fragmentTransaction.add(R.id.frameLayoutContainer, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             } else if (selectedCategory == "Logout") {

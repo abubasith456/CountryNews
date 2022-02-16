@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import com.example.countrynews.broadcast.MyBroadcastReceiver;
 import com.example.countrynews.databinding.ActivityMainBinding;
 import com.example.countrynews.utils.Utils;
 import com.example.countrynews.viewModel.LoginRegisterViewModel;
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivityViewModel mainActivityViewModel;
     private ActivityMainBinding activityMainBinding;
+    public MyBroadcastReceiver myBroadcastReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         activityMainBinding.setMainActivityViewModel(mainActivityViewModel);
         mainActivityViewModel.getActivity(MainActivity.this);
-        checkExistUser();
+        myBroadcastReceiver = new MyBroadcastReceiver();
     }
 
     private void checkExistUser() {
@@ -38,7 +42,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        this.registerReceiver(myBroadcastReceiver, filter);
+        checkExistUser();
+    }
+
+    //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        MenuInflater inflater = getMenuInflater();
 //        inflater.inflate(R.menu.more_menu, menu);

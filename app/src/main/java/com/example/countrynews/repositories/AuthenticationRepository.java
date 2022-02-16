@@ -67,7 +67,7 @@ public class AuthenticationRepository {
                 if (task.isSuccessful()) {
                     Fragment fragment = new NewsFragment();
                     FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+                    fragmentTransaction.add(R.id.frameLayoutContainer, fragment);
 //                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     storeUserInputData(name, email);
