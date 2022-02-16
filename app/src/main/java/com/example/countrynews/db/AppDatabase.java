@@ -11,7 +11,7 @@ import com.example.countrynews.model.offlineNews.News;
 @Database(entities = {News.class}, version  = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
-    public abstract UserDao userDao();
+    public abstract NewsDao userDao();
 
     private static AppDatabase INSTANCE;
 

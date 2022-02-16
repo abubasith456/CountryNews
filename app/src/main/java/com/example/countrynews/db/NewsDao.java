@@ -10,7 +10,7 @@ import com.example.countrynews.model.offlineNews.News;
 import java.util.List;
 
 @Dao
-public interface UserDao {
+public interface NewsDao {
 
     @Query("SELECT * FROM news")
     List<News> getAllNewsData();
