@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.countrynews.LoginFragment;
@@ -65,7 +66,7 @@ public class NewsFragmentViewModel extends AndroidViewModel {
 //        Toast.makeText(application.getApplicationContext(), "" + newsHeadLines.get(0), Toast.LENGTH_SHORT).show();
 //    }
 
-    public MutableLiveData<List<NewsHeadLines>> getNewsHeadlines() {
+    public LiveData<List<NewsHeadLines>> getNewsHeadlines() {
         try {
             Call<NewsResponse> call = BCRequests.getInstance().getBCRestService().callHeadlines(country, category, null, api);
             call.enqueue(new Callback<NewsResponse>() {
@@ -93,7 +94,8 @@ public class NewsFragmentViewModel extends AndroidViewModel {
         return newsHeadlines;
     }
 
-    public MutableLiveData<List<NewsHeadLines>> getCategoryNews() {
+
+    public LiveData<List<NewsHeadLines>> getCategoryNews() {
         return categoryNews;
     }
 

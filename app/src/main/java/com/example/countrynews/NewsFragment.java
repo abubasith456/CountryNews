@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,9 @@ public class NewsFragment extends Fragment {
     private NewsFragmentViewModel newsFragmentViewModel;
     private NewsAdapter newsAdapter;
     public List<NewsHeadLines> newsHeadLinesList;
-    private FirebaseAuth auth;
+    private Handler handler = new Handler();
+    private int apiDelayed = 5 * 1000; //1 second=1000 milisecond, 5*1000=5seconds
+    private Runnable runnable;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -45,9 +48,9 @@ public class NewsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("LifeCycle news ==>", "onCreate");
         newsHeadLinesList = new ArrayList<>();
         newsAdapter = new NewsAdapter();
-        auth = FirebaseAuth.getInstance();
 //        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
 //            @Override
 //            public void handleOnBackPressed() {
@@ -66,6 +69,7 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.e("LifeCycle news ==>", "onCreateView");
         newsFragmentViewModel = new ViewModelProvider(requireActivity()).get(NewsFragmentViewModel.class);
         fragmentNewsBinding = FragmentNewsBinding.inflate(getLayoutInflater());
         fragmentNewsBinding.setLifecycleOwner(this);
@@ -78,6 +82,7 @@ public class NewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.e("LifeCycle news ==>", "onViewCreated");
         try {
             loadNewsData();
             loadCategoryNewsData();
@@ -85,11 +90,6 @@ public class NewsFragment extends Fragment {
             Log.e("Error ==>", e.getMessage());
         }
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     public void loadNewsData() {
@@ -135,4 +135,41 @@ public class NewsFragment extends Fragment {
             Log.e("Error ==>", e.getMessage());
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("LifeCycle News ==>", "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("LifeCycle News ==>", "OnPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e("LifeCycle News ==>", "onStop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e("LifeCycle News ==>", "onDestroyView");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.e("LifeCycle News ==>", "onDetach");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("LifeCycle News ==>", "onDestroy");
+    }
+
 }

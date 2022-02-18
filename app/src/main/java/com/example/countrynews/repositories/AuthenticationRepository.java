@@ -1,6 +1,8 @@
 package com.example.countrynews.repositories;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ public class AuthenticationRepository {
     private FirebaseFirestore firebaseFirestore;
     private FragmentActivity fragmentActivity;
     ActivityMainBinding activityMainBinding;
+    MainActivity mainActivity;
+    private SharedPreferences sharedPreferences;
 
 
     public MutableLiveData<FirebaseUser> getFirebaseLoginUserMutableLiveData() {
@@ -67,7 +71,7 @@ public class AuthenticationRepository {
                 if (task.isSuccessful()) {
                     Fragment fragment = new NewsFragment();
                     FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.add(R.id.frameLayoutContainer, fragment);
+                    fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
 //                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     storeUserInputData(name, email);
@@ -134,6 +138,7 @@ public class AuthenticationRepository {
     }
 
     public void checkExistUser(MainActivity mainActivity) {
+        this.mainActivity=mainActivity;
         try {
             if (auth.getCurrentUser() != null) {
                 Fragment fragment = new NewsFragment();
