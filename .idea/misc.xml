@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/drawable/background_custom_progress_bar.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/icon_category.xml" value="0.124" />
+        <entry key="app/src/main/res/drawable/keyboard_button_bg.xml" value="0.19" />
+        <entry key="app/src/main/res/drawable/keyboard_divider.xml" value="0.19" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.181842041015625" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.246875" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
@@ -13,6 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_offline_news.xml" value="0.23385416666666667" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_sports.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/keyboard.xml" value="0.24791666666666667" />
         <entry key="app/src/main/res/layout/list_view_news.xml" value="0.11354166666666667" />
         <entry key="app/src/main/res/layout/list_view_offline_news.xml" value="0.24791666666666667" />
         <entry key="app/src/main/res/layout/list_view_row_news.xml" value="0.15363922119140624" />
