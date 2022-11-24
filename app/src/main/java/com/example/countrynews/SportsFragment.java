@@ -31,6 +31,7 @@ public class SportsFragment extends Fragment {
 
     public SportsFragment() {
         // Required empty public constructor
+        //Also you can pass the data
     }
 
 

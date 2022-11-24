@@ -18,6 +18,7 @@ public class BaseFragment extends Fragment implements BaseListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //You can write code here
     }
 
 
