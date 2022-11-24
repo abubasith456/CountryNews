@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    //Event bus to listener the event
     @Subscribe
     public void loadFragment(BaseMessage message) {
         Log.e("loadFragment", "Called");

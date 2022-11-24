@@ -44,7 +44,7 @@ public class NewsDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.e("LifeCycle Details ==>", "onCreate");
         try {
-
+                //Here we want add some codes
         } catch (Exception e) {
             Log.e("Error==>", e.getMessage());
         }
