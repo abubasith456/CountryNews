@@ -1,7 +1,9 @@
 package com.example.countrynews.viewModel;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.countrynews.LoginFragment;
+import com.example.countrynews.MainActivity;
 import com.example.countrynews.NewsFragment;
 import com.example.countrynews.OfflineNewsFragment;
 import com.example.countrynews.R;
@@ -161,23 +164,35 @@ public class NewsFragmentViewModel extends AndroidViewModel {
 
     private void loadSelectedItems(String selectedCategory) {
         try {
-            if (selectedCategory == "Offline news") {
+            if (selectedCategory.equals("Offline news")) {
                 Fragment fragment = new OfflineNewsFragment();
                 FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.add(R.id.frameLayoutContainer, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-            } else if (selectedCategory == "Logout") {
+//                restart(getApplication());
+            } else if (selectedCategory.equals("Logout")) {
                 auth.signOut();
-                Fragment fragment = new LoginFragment();
-                FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-//                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                Fragment fragment = new LoginFragment(message);
+//                FragmentTransaction fragmentTransaction = newsFragment.getActivity().getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+////                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
             }
         } catch (Exception exception) {
             Log.e("Error ==> ", "" + exception);
         }
+    }
+
+    public static void restart(Context context) {
+//        Intent mainIntent = IntentCompat.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_LAUNCHER);
+//        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        context.getApplicationContext().startActivity(mainIntent);
+//        System.exit(0);
+//        Runtime.getRuntime().exit(1);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
 }

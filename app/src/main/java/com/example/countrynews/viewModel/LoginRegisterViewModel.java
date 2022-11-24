@@ -25,9 +25,12 @@ import com.example.countrynews.NewsFragment;
 import com.example.countrynews.R;
 import com.example.countrynews.RegisterFragment;
 import com.example.countrynews.databinding.ActivityMainBinding;
+import com.example.countrynews.messages.RegisterMessage;
 import com.example.countrynews.repositories.AuthenticationRepository;
 import com.example.countrynews.utils.Utils;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class LoginRegisterViewModel extends AndroidViewModel {
 
@@ -73,12 +76,13 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     }
 
     public void onRegisterLayoutClick(View view) {
-        Utils.hideSoftKeyboard(activity);
-        Fragment registerFragmentFragment = new RegisterFragment();
-        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayoutContainer, registerFragmentFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        Utils.hideSoftKeyboard(activity);
+//        Fragment registerFragmentFragment = new RegisterFragment();
+//        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.frameLayoutContainer, registerFragmentFragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+        EventBus.getDefault().postSticky(new RegisterMessage(true));
     }
 
     public void onForgotPasswordClick(View view) {
@@ -164,7 +168,6 @@ public class LoginRegisterViewModel extends AndroidViewModel {
                 Exception exception) {
             Log.e("Error register ==> ", "" + exception);
         }
-
     }
 
     public void onForgotClick(View view) {
@@ -204,6 +207,14 @@ public class LoginRegisterViewModel extends AndroidViewModel {
             Log.e("Error ==> ", "" + exception);
         }
         return valid;
+    }
+
+    public void subscribeBus() {
+        EventBus.getDefault().register(this);
+    }
+
+    public void unSubscribeBus() {
+        EventBus.getDefault().unregister(this);
     }
 
     public boolean validateRegister() {

@@ -22,11 +22,15 @@ import android.widget.Toast;
 import com.example.countrynews.adapter.NewsAdapter;
 import com.example.countrynews.broadcast.MyBroadcastReceiver;
 import com.example.countrynews.databinding.FragmentNewsBinding;
+import com.example.countrynews.messages.BaseMessage;
 import com.example.countrynews.model.news.NewsHeadLines;
 import com.example.countrynews.model.news.NewsResponse;
+import com.example.countrynews.utils.Constant;
 import com.example.countrynews.utils.Utils;
 import com.example.countrynews.viewModel.NewsFragmentViewModel;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +93,6 @@ public class NewsFragment extends Fragment {
         } catch (Exception e) {
             Log.e("Error ==>", e.getMessage());
         }
-
     }
 
     public void loadNewsData() {
@@ -136,17 +139,19 @@ public class NewsFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("LifeCycle News ==>", "onResume");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.e("LifeCycle News ==>", "OnPause");
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        EventBus.getDefault().register(this);
+//        Log.e("LifeCycle News ==>", "onResume");
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        EventBus.getDefault().unregister(this);
+//        Log.e("LifeCycle News ==>", "OnPause");
+//    }
 
     @Override
     public void onStop() {

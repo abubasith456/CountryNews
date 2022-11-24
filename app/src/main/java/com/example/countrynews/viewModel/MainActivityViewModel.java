@@ -1,13 +1,17 @@
 package com.example.countrynews.viewModel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.countrynews.MainActivity;
+import com.example.countrynews.messages.LoginMessages;
 import com.example.countrynews.repositories.AuthenticationRepository;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class MainActivityViewModel extends AndroidViewModel {
 
@@ -23,6 +27,13 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void getActivity(MainActivity mainActivity){
         this.mainActivity=mainActivity;
+        boolean test = false;
+        EventBus.getDefault().post(new LoginMessages(false));
+        if (!test) {
+            Log.e("test==> ", "" + test);
+        } else {
+            Log.e("test==> ", "Null");
+        }
     }
 
     public void checkExistUser() {

@@ -1,7 +1,6 @@
 package com.example.countrynews.repositories;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,6 +17,8 @@ import com.example.countrynews.NewsFragment;
 import com.example.countrynews.R;
 import com.example.countrynews.databinding.ActivityMainBinding;
 
+import com.example.countrynews.messages.LoginMessages;
+import com.example.countrynews.messages.NewsMessage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
@@ -87,11 +90,11 @@ public class AuthenticationRepository {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Fragment fragment = new NewsFragment();
-                    FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-//                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+//                    Fragment fragment = new NewsFragment();
+//                    FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+//                    fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+////                    fragmentTransaction.addToBackStack(null);
+//                    fragmentTransaction.commit();
                     firebaseLoginUserMutableLiveData.postValue(auth.getCurrentUser());
                 } else {
                     Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -105,12 +108,12 @@ public class AuthenticationRepository {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(application.getApplicationContext(), "Link sent to your email", Toast.LENGTH_SHORT).show();
-                    Fragment fragment = new LoginFragment();
-                    FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+//                    Toast.makeText(application.getApplicationContext(), "Link sent to your email", Toast.LENGTH_SHORT).show();
+//                    Fragment fragment = new LoginFragment();
+//                    FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+//                    fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+//                    fragmentTransaction.addToBackStack(null);
+//                    fragmentTransaction.commit();
                 } else {
                     Toast.makeText(application.getApplicationContext(), "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
                 }
@@ -138,20 +141,22 @@ public class AuthenticationRepository {
     }
 
     public void checkExistUser(MainActivity mainActivity) {
-        this.mainActivity=mainActivity;
+        this.mainActivity = mainActivity;
         try {
             if (auth.getCurrentUser() != null) {
-                Fragment fragment = new NewsFragment();
-                FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-//                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }else {
-                Fragment fragment = new LoginFragment();
-                FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
-//                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                Fragment fragment = new NewsFragment();
+//                FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+////                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+                EventBus.getDefault().postSticky(new NewsMessage(false));
+            } else {
+//                Fragment fragment = new LoginFragment();
+//                FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.frameLayoutContainer, fragment);
+////                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+                EventBus.getDefault().postSticky(new LoginMessages(false));
             }
         } catch (Exception e) {
             Log.e("Error==>", e.getMessage());
